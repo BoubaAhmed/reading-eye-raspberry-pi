@@ -1,0 +1,22 @@
+# Reading Eye - Raspberry Pi Requirements
+# Python 3.13.5+
+
+# Core dependencies
+numpy==1.26.4
+opencv-python-headless==4.8.1.78
+
+# OCR
+pytesseract==0.3.10
+
+# Text-to-Speech
+pyttsx3==2.90
+gTTS==2.4.0
+
+# Audio playback
+pygame==2.5.2
+
+# Picamera2 (pre-installed on Raspberry Pi OS with python3-picamera2)
+# But we include it for reference - actual installation via apt
+
+# Utilities
+python-dotenv==1.0.0
