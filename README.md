@@ -8,7 +8,10 @@ Complete setup instructions for deploying Reading Eye on Raspberry Pi 5 via SSH.
 
 ```bash
 ssh pi@<RASPBERRY_PI_IP>
-cd ~/reading_eye
+# ssh raspberryens@192.168.43.197
+cd Projet_7_Reading_eye
+pwd
+ls
 sudo bash system_setup.sh
 ```
 
@@ -97,7 +100,6 @@ From your development machine:
 
 ```bash
 ssh pi@<RASPBERRY_PI_IP>
-# Default credentials: pi / raspberry (may vary)
 ```
 
 To find your Raspberry Pi's IP address:
@@ -116,8 +118,8 @@ If using GitHub:
 
 ```bash
 cd ~
-git clone https://github.com/YOUR_ORG/reading-eye.git
-cd reading-eye
+git clone https://github.com/BoubaAhmed/reading-eye-raspberry-pi.git
+cd reading-eye-raspberry-pi
 ```
 
 Or copy via SCP:
