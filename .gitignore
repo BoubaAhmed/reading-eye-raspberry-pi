@@ -141,3 +141,5 @@ capture/*.jpg
 *.tmp
 *.bak
 *.backup
+
+env_projet_7/
