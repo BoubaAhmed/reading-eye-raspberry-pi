@@ -1,37 +1,59 @@
-# Reading Eye - Raspberry Pi SSH Setup (Quick Reference)
+# Reading Eye — Raspberry Pi SSH Setup (Quick Reference)
 
 ## First Time Setup (15-30 minutes)
 
 ### 1. Connect to Raspberry Pi
 
 ```bash
-ssh pi@raspberrypi.local
-# or: ssh pi@<IP_ADDRESS>
+ssh raspberryens@<RASPBERRY_PI_IP>
+# or: ssh raspberryens@192.168.43.197
 ```
 
-### 2. Navigate to Project
+### 2. Create project folder and clone the repository
+
+If you don't yet have the project on the Pi, create the project folder and clone into it:
 
 ```bash
-cd ~/reading_eye
+nmkdir -p ~/Projet_7_Reading_eye
+cd ~/Projet_7_Reading_eye
+git clone https://github.com/BoubaAhmed/reading-eye-raspberry-pi.git .
 ```
+
+If you already created the `env_projet_7` venv inside the folder, just `cd` into the folder and clone:
+
+```bash
+cd ~/Projet_7_Reading_eye
+git clone https://github.com/BoubaAhmed/reading-eye-raspberry-pi.git .
+```
+
+> Tip: add `env_projet_7/` to `.gitignore` so the virtualenv is not committed.
 
 ### 3. System Setup (First User Only - Requires sudo)
 
 ```bash
 sudo bash system_setup.sh
-# Log out and back in
+# Log out and back in if the script instructs to do so
 exit
-ssh pi@raspberrypi.local
+ssh raspberryens@<RASPBERRY_PI_IP>
 ```
 
-### 4. Python Environment Setup
+### 4. Create / activate Python virtual environment
+
+Create the venv (if not already created) and activate it:
 
 ```bash
-cd ~/reading_eye
-bash setup.sh
+# from inside ~/Projet_7_Reading_eye
+python3 -m venv env_projet_7
+source env_projet_7/bin/activate
 ```
 
-### 5. Test It
+### 5. Install Python dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 6. Test It
 
 ```bash
 bash run.sh --single --lang fra+eng
@@ -42,8 +64,8 @@ bash run.sh --single --lang fra+eng
 ## Every Session - Activate Environment
 
 ```bash
-source ~/env_projet_7/bin/activate
-cd ~/reading_eye
+nsource ~/Projet_7_Reading_eye/env_projet_7/bin/activate
+cd ~/Projet_7_Reading_eye
 ```
 
 ---
@@ -86,10 +108,10 @@ Use any of these for `--lang`:
 
 ## SSH from Windows
 
-Use PuTTY or Windows PowerShell:
+Use PowerShell or PuTTY:
 
 ```powershell
-ssh pi@<IP_ADDRESS>
+ssh raspberryens@<IP_ADDRESS>
 ```
 
 Or use Visual Studio Code Remote SSH extension.
@@ -101,13 +123,13 @@ Or use Visual Studio Code Remote SSH extension.
 From your computer to Pi:
 
 ```bash
-scp -r raspberry_code/ pi@<IP_ADDRESS>:~/reading_eye
+scp -r raspberry_code/ raspberryens@<IP_ADDRESS>:~/Projet_7_Reading_eye
 ```
 
 From Pi to your computer:
 
 ```bash
-scp pi@<IP_ADDRESS>:~/reading_eye/capture/image.png ./
+scp raspberryens@<IP_ADDRESS>:~/Projet_7_Reading_eye/capture/image.png ./
 ```
 
 ---
