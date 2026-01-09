@@ -9,7 +9,7 @@ set -e
 # Detect script directory
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 VENV_NAME="${VENV_NAME:-env_projet_7}"
-VENV_DIR="${SCRIPT_DIR}/../${VENV_NAME}"
+VENV_DIR="${SCRIPT_DIR}/${VENV_NAME}"
 APP_DIR="${SCRIPT_DIR}/scripts"
 
 # Check if virtual environment exists

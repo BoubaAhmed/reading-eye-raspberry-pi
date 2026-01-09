@@ -61,6 +61,10 @@ sudo bash system_setup.sh
 5. Install Python dependencies:
 
 ```bash
+sudo apt update && sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
+```
+
+```bash
 pip install -r requirements.txt
 ```
 

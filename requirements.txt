@@ -13,7 +13,7 @@ pyttsx3==2.90
 gTTS==2.4.0
 
 # Audio playback
-pygame==2.5.2
+pygame==2.6.1
 
 # Picamera2 (pre-installed on Raspberry Pi OS with python3-picamera2)
 # But we include it for reference - actual installation via apt
