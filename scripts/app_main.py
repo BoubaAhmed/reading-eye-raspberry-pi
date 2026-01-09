@@ -71,7 +71,7 @@ class ReadingEyeApp:
         default_config = {
             'ocr_language': 'fra+eng',
             'tts_language': 'fr',
-            'camera_resolution': [1280, 720],
+            'camera_resolution': [1920, 1080],
             'tts_rate': 150,
             'tts_volume': 0.9,
             'tesseract_path': '/usr/bin/tesseract',
