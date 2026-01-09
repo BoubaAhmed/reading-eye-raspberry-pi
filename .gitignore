@@ -124,8 +124,8 @@ dmypy.json
 
 # Project-specific
 logs/*.log
-capture/*.png
-capture/*.jpg
+# capture/*.png
+# capture/*.jpg
 .DS_Store
 *.swp
 *.swo
