@@ -1,860 +1,1487 @@
-% filepath: e:\MasterSIE\semestre3\Robotics\Projet Reading Eye\raspberry_pi\raspberry_code\PPT\main.tex
-\documentclass[10pt, aspectratio=169]{beamer}
-\usetheme[progressbar=frametitle, numbering=fraction]{metropolis}
+% Rapport de Fin de Projet - Reading Eye
+% Master 2 - Systèmes Intelligents pour l'Éducation (SIE)
+% ENS Meknès
 
-\usepackage{appendixnumberbeamer}
+% \documentclass[12pt, a4paper, oneside, french]{report}
+\documentclass[a4paper,12pt]{report}
+
+% ==================== PREAMBLE ====================
+\usepackage[table]{xcolor}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{tocloft}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{pgfplots}
+\usepackage{wrapfig}
+\usepackage{fancybox}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{xcolor,graphicx}
+\usepackage[top=0.4in,bottom=0.5in,right=0.5in,left=0.5in]{geometry}
+\usepackage{titlesec}
+\usepackage{mathpazo}
+\usepackage{enumitem}
+\usepackage{float}  % Pour le positionnement [H] des figures
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{fancyvrb} 
+\usepackage{tikz}
+\usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta}
+\usepackage{tcolorbox}
+\usepackage{fontawesome5}
+\usepackage{qrcode}
+\usepackage{animate}
+\usepackage{amsmath}    % Pour les environnements mathématiques
+\usepackage{amssymb}    % Pour les symboles mathématiques
+\usepackage{amsthm}     % Pour les théorèmes
+\usepackage{geometry}   % Pour les marges
+\usepackage{listings}   % Pour le code (optionnel)
+\usepackage{xcolor}     % Pour la couleur dans le code
+\usepackage{enumitem}   % Pour personnaliser les listed
+\usepackage{fancyvrb}
+\usepackage{framed}
+\usepackage{multirow}
 \usepackage{fontawesome5}
 
-\usepackage[utf8]{inputenc}
-\usepackage{graphicx}
-\usepackage{booktabs}
-\usepackage{multicol}
-\usepackage{ragged2e}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage{libertinus}
-\usepackage{pgfplots}
-\usetikzlibrary{positioning}
-\pgfplotsset{compat=1.18}
-\usepackage[table]{xcolor}
-\usepackage{tikz}
-\usetikzlibrary{shapes,arrows,positioning,calc}
-\usepackage{listings}
-\usepackage{xcolor}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{black!05},   % Fond gris clair
+    commentstyle=\color{green!60!black},  % Commentaires en vert
+    keywordstyle=\color{blue},            % Mots-clés en bleu
+    stringstyle=\color{red},              % Chaînes de caractères en rouge
+    numberstyle=\tiny\color{gray},        % Numéros de ligne en gris
+    basicstyle=\ttfamily\footnotesize,    % Police monospace en petite taille
+    breakatwhitespace=true,               % Coupure des lignes sur les espaces
+    breaklines=true,                      % Retour à la ligne automatique
+    captionpos=b,                         % Légende en bas
+    numbers=left,                         % Numéros de ligne à gauche
+    numbersep=5pt,                        % Espace entre numéros et code
+    showspaces=false,                     % Pas d'affichage des espaces
+    showstringspaces=false,               % Pas d'affichage des espaces dans les chaînes
+    showtabs=false,                       % Pas d'affichage des tabulations
+    tabsize=2,                            % Taille des tabulations
+}
 
-\definecolor{bluepr}{RGB}{0, 51, 102}
-\definecolor{greenpr}{RGB}{0, 102, 51}
-\definecolor{redpr}{RGB}{153, 0, 0}
-\definecolor{orangepr}{RGB}{255, 102, 0}
-
-% Code highlighting
 \lstset{
     language=Python,
     basicstyle=\ttfamily\small,
-    keywordstyle=\color{bluepr}\bfseries,
-    commentstyle=\color{gray},
-    stringstyle=\color{greenpr},
+    keywordstyle=\color{blue},
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
     breaklines=true,
-    showstringspaces=false,
-    tabsize=2,
-    backgroundcolor=\color{gray!10}
+    showstringspaces=false
 }
+% Palette personnalisée
+% ===== Main structure colors =====
+\definecolor{chapterColor}{RGB}{0, 70, 140}       % Bleu foncé (chapitres)
+\definecolor{sectionColor}{RGB}{0, 120, 90}       % Vert (sections)
+\definecolor{subsectionColor}{RGB}{200, 120, 0}   % Orange (sous-sections)
+\definecolor{subsubsectionColor}{RGB}{160, 0, 0}  % Rouge foncé
 
-\title[Projet7]{"Reading Eye" - Assistant de lecture pour malvoyants avec 
-IA embarquée}
-\subtitle{Module : ROBOTIQUE ÉDUCATIVE ET APPLICATIONS}
-\date{\today}
-\author{
-    \textbf{Réalisé par :} Bouba Ahmed \& Lkhalidi Mohamed \\
-    \textbf{Encadré par :} Pr. Ahmed Regragui
-}
-\institute{Master 2 - Systèmes Intelligents pour l'Éducation \\ École Normale Supérieure de Meknès}
+% ===== Title & cover page =====
+\definecolor{titleColor}{RGB}{20, 60, 120}        % Bleu profond élégant
+\definecolor{subtitleColor}{RGB}{95, 95, 95}      % Gris foncé
+\definecolor{authorColor}{RGB}{0, 90, 150}        % Bleu clair
+\definecolor{supervisorColor}{RGB}{120, 70, 0}    % Brun/orange sobre
 
-\titlegraphic{
-    \begin{minipage}{0.49\linewidth}
-        \raggedright
-        \includegraphics[height=0.7cm]{logoens.png}
-    \end{minipage}
-    \begin{minipage}{0.49\linewidth}
-        \raggedleft
-        \includegraphics[height=0.7cm]{SIE_logo.png}
-    \end{minipage}
-}
+% ===== UI / blocks (Beamer, boxes) =====
+\definecolor{blockTitleColor}{RGB}{255, 255, 255} % Blanc
+\definecolor{blockBodyColor}{RGB}{240, 245, 250}  % Gris bleuté très clair
+\definecolor{alertColor}{RGB}{180, 0, 0}          % Rouge alerte
+\definecolor{exampleColor}{RGB}{0, 110, 80}       % Vert exemple
 
-\setbeamertemplate{section in toc}{%
-  \textbf{\inserttocsectionnumber.~\inserttocsection}%
-}
-\setbeamertemplate{subsection in toc}{%
-  \hspace{1.5em}{\footnotesize\color{gray}\inserttocsubsectionnumber.~\inserttocsubsection}%
-}
-\setlength{\parskip}{0.3em}
+% ===== Lines, separators, icons =====
+\definecolor{lineColor}{RGB}{180, 180, 180}       % Gris clair
+\definecolor{accentColor}{RGB}{230, 150, 40}      % Accent doré/orange
+\definecolor{shadowColor}{RGB}{210, 210, 210}     % Ombres légères
 
+% ===== Backgrounds =====
+\definecolor{pageBgColor}{RGB}{248, 250, 252}     % Fond très clair
+\definecolor{highlightBg}{RGB}{255, 245, 230}     % Fond orangé léger
+
+% Code listing configuration
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\newcommand{\yes}{\faCheck}
+\newcommand{\no}{\faTimes}
+\newcommand{\good}{\faCheckDouble}
+
+\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries\color{chapterColor}}{\thechapter -}{0.2em}{}
+\titleformat{\section}[hang]{\normalfont\large\bfseries\color{sectionColor}}{\thesection.}{0.2em}{}
+\titleformat{\subsection}[hang]{\normalfont\normalsize\bfseries\color{orange!70!black}}{\thesubsection.}{0.2em}{}
+\titleformat{\subsubsection}[hang]{\normalfont\small\bfseries\color{red!70!black}}{\thesubsubsection.}{0.5em}{}
+% Réduction des espacements verticaux
+\titlespacing*{\chapter}
+  {0pt}    % indentation gauche
+  {0pt}    % espace AVANT le chapitre
+  {15pt}   % espace APRÈS le chapitre
+
+\titlespacing*{\section}
+  {0pt}
+  {12pt}
+  {6pt}
+
+\titlespacing*{\subsection}
+  {0pt}
+  {10pt}
+  {4pt}
+
+
+% ==================== DOCUMENT ====================
 \begin{document}
 
-%===========================
-% Page de titre
-%===========================
-\begin{frame}
-    \titlepage
-\end{frame}
-
-%===========================
-% Table des matières
-%===========================
-\begin{frame}{Plan de la présentation}
-\begin{columns}[T, totalwidth=\textwidth]
-
-% Left column
-\begin{column}{0.5\textwidth}
-\tableofcontents[hideallsubsections, sections={1-5}]
-\end{column}
-
-% Right column
-\begin{column}{0.5\textwidth}
-\tableofcontents[hideallsubsections, sections={6-}]
-\end{column}
-
-\end{columns}
-\end{frame}
-
-
-%===========================
-% SECTION 1: INTRODUCTION ET CONTEXTE
-%===========================
-\section{Introduction et Contexte}
-
-\begin{frame}{Contexte du projet}
-    \begin{itemize}
-        \item \textbf{Problématique :} Accessibilité pour les personnes malvoyantes et déficientes visuelles
-        \item \textbf{Solution :} Développer un assistant de lecture portable et efficace
-        \item \textbf{Objectif pédagogique :} Intégrer l'IA et la robotique dans une application réelle
-        \item \textbf{Plateforme :} Raspberry Pi 5 (système embarqué léger et accessible)
-    \end{itemize}
-    
-    \vspace{1em}
-    \begin{center}
-        \textcolor{bluepr}{\Large\faIcon{wheelchair}} 
-        \quad
-        \textcolor{bluepr}{\Large\faIcon{camera}} 
-        \quad
-        \textcolor{bluepr}{\Large\faIcon{microchip}}
-        \quad
-        \textcolor{bluepr}{\Large\faIcon{python}}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Cahier des charges}
-    \begin{columns}[T]
-        \column{0.48\textwidth}
-        \textbf{Fonctionnalités requises :}
-        \begin{itemize}
-            \item \textcolor{greenpr}{\checkmark} Capture vidéo haute résolution
-            \item \textcolor{greenpr}{\checkmark} Reconnaissance optique (OCR)
-            \item \textcolor{greenpr}{\checkmark} Synthèse vocale (TTS)
-            \item \textcolor{greenpr}{\checkmark} Support multilingue
-            \item \textcolor{greenpr}{\checkmark} Mode continu ou unique
-        \end{itemize}
-        
-        \column{0.48\textwidth}
-        \textbf{Contraintes techniques :}
-        \begin{itemize}
-            \item Raspberry Pi 5 (8 GB RAM)
-            \item Déploiement sans interface graphique
-            \item Accès à distance via SSH
-            \item Environnements virtuels isolés
-            \item Documentation complète
-        \end{itemize}
-    \end{columns}
-\end{frame}
-
-%===========================
-% SECTION 2: ARCHITECTURE MATÉRIELLE
-%===========================
-\section{Architecture Matérielle}
-
-\begin{frame}{Composants utilisés}
-    \begin{center}
-        \begin{tabular}{ll}
-            \toprule
-            \textbf{Composant} & \textbf{Spécifications} \\
-            \midrule
-            Raspberry Pi 5 & 8 GB RAM, CPU 64-bit, 2.4 GHz \\
-            Caméra Pi & Pi Camera Module 3 (Wide) \\
-            Microphone & Intégré ou USB externe (optionnel) \\
-            Haut-parleur & Audio jack 3.5mm ou HDMI \\
-            Alimentation & USB-C 27W \\
-            Boîtier 3D & Conçu et imprimé en PLA \\
-            \bottomrule
-        \end{tabular}
-    \end{center}
-    
-    \vspace{1.5em}
-    \textbf{Architecture globale :}
-    \begin{center}
-        \textcolor{bluepr}{[Caméra]} 
-        $\rightarrow$ 
-        \textcolor{bluepr}{[Raspberry Pi]} 
-        $\rightarrow$ 
-        \textcolor{bluepr}{[Audio/SSH]}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Conception 3D et fabrication}
-    \begin{columns}[T]
-        \column{0.5\textwidth}
-        \textbf{Design du boîtier :}
-        \begin{itemize}
-            \item Modélisé en CAO (FreeCAD/OpenSCAD)
-            \item Accès caméra optimal
-            \item Ventilation passive
-            \item Ports accessibles (USB, HDMI)
-            \item Dimensions compactes
-        \end{itemize}
-        
-        \column{0.5\textwidth}
-        \textbf{Impression 3D :}
-        \begin{itemize}
-            \item Matériau : PLA (biodégradable)
-            \item Temps : $\sim$ 12-18 heures
-            \item Résolution : 0.2mm
-            \item Finitions : légères retouches
-            \item Intégration : caméra et électronique
-        \end{itemize}
-    \end{columns}
-    
-    \vspace{1.5em}
-    \begin{center}
-        \textcolor{greenpr}{\faIcon{cube}} \textit{Boîtier portable et ergonomique}
-    \end{center}
-\end{frame}
-
-\begin{frame}{Intégration matérielle}
-
-\begin{columns}[T, totalwidth=\textwidth]
-
-% Colonne de gauche : schéma
-\begin{column}{0.6\textwidth}
+% Page de garde professionnelle
+\begin{titlepage}
 \begin{center}
-\begin{tikzpicture}[scale=1.5]
+	\begin{minipage}{2.5cm}
+	\begin{center}
+		\includegraphics[width=3.5cm,height=1.3cm]{logoens.png}
+	\end{center}
+\end{minipage}\hfill
+\begin{minipage}{10cm}
+	\begin{center}
+	\textbf{ Université Moulay Ismaïl}\\[0.1cm]
+    \textbf{\uppercase{é}cole Normale Supérieure (ENS)}\\[0.1cm]
+    \textbf{-Meknès-}
+	\end{center}
+\end{minipage}\hfill
+\begin{minipage}{2.5cm}
+	\begin{center}
+		\includegraphics[width=2.2cm,height=2cm]{SIE_logo.png}
+	\end{center}
+\end{minipage}
 
-% Boîtier
-\draw[thick, rounded corners] (0,0) rectangle (4,3);
-\node at (2, 2.5) [font=\Large, align=center] {\textbf{\faIcon{cube} Boîtier 3D}};
+\vspace{1cm}
 
-% Composants internes avec icônes
-\node at (1, 1.8) [draw, rectangle, fill=bluepr!20, align=center]
-{\faIcon{microchip}\\Raspberry Pi 5};
+\textsc{\Large }\\[3.5cm]
 
-\node at (3, 1.8) [draw, rectangle, fill=greenpr!20, align=center]
-{\faIcon{camera}\\Caméra Pi};
+\textsc{\Large RAPPORT DE FIN DE PROJET}\\[1cm]
 
-\node at (1, 0.8) [draw, rectangle, fill=orangepr!20, align=center]
-{\faIcon{volume-up}\\Audio};
 
-\node at (3, 0.8) [draw, rectangle, fill=redpr!20, align=center]
-{\faIcon{plug}\\Power};
+\rule{\linewidth}{0.3mm} \\[1cm]
 
-% Flèches
-% \draw[->, thick] (1.5, 1.5) -- (2.5, 1.5);
-% \draw[->, thick] (0.5, 1.0) -- (0.5, 0.5);
-% \draw[->, thick] (3.5, 1.0) -- (3.5, 0.5);
+{\huge \bfseries\color{titleColor}\textbf{Reading Eye}} \\[1cm]
+{\Large \bfseries\color{titleColor}\textbf{Système d'Accessibilité pour Utilisateurs Malvoyants basé sur Reconnaissance Optique de Caractères (OCR) et Synthèse Vocale (TTS)}} \\[1.4cm]
+ 
+\rule{\linewidth}{0.3mm} \\[1.5cm]
 
-\end{tikzpicture}
-\end{center}
-\end{column}
+{\large \bfseries Master 2 - Systèmes Intelligents pour l'\uppercase{é}ducation (SIE)}\\[0.5cm]
 
-% Colonne de droite : texte
-\begin{column}{0.4\textwidth}
-\begin{itemize}
-    \item ✓ Caméra montée sur support stable
-    \item ✓ Raspberry Pi fixé avec amortisseurs
-    \item ✓ Câbles organisés
-    \item ✓ Ventilation adéquate
+% \rule{\linewidth}{0.3mm} \\[1.5cm]
+
+\vfill
+
+\begin{minipage}{0.45\textwidth}
+\begin{itemize}[label=$\diamond$]
+  \setlength{\itemsep}{0pt}
+  \item[] \large \color{subtitleColor}{Réalisé par :}
+  \item[] \hspace{0.6cm}\large \color{authorColor}{Bouba Ahmed}
+  \item[] \hspace{0.6cm}\large \color{authorColor}{Lkhalidi mohamed}
 \end{itemize}
-\end{column}
 
-\end{columns}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+\begin{itemize}[label=$\diamond$]
+  \setlength{\itemsep}{0pt}
+  \item[] \large \color{subtitleColor}{Encadré par :}
+  \item[] \hspace{0.6cm}\large \color{authorColor}{Pr. Regragui Ahmed}
+  \item[] \hspace{0.6cm}\large \color{authorColor}{Pr. El Arbi Abdelaoui Alaoui}
+\end{itemize}
+\end{minipage}
 
-\end{frame}
+\vfill
+{\large \color{orange!80!black}{Année universitaire}\\ \color{subtitleColor}2024/2025}
+\end{center}
+\end{titlepage}
+% ==================== REMERCIEMENTS ====================
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
 
+Nous adressons nos remerciements les plus sincères aux personnes et aux structures qui ont contribué, de près ou de loin, à la réalisation de ce projet de fin de module.
 
-%===========================
-% SECTION 3: ARCHITECTURE LOGICIELLE
-%===========================
-\section{Architecture Logicielle}
+\section*{Encadrement scientifique}
 
-\begin{frame}{Stack technologique}
-    \begin{center}
-        \begin{tabular}{lll}
-            \toprule
-            \textbf{Couche} & \textbf{Technologie} & \textbf{Rôle} \\
-            \midrule
-            \textbf{OS} & Raspberry Pi OS (Bookworm) & Noyau système \\
-            \textbf{Python} & Python 3.13.5 & Langage principal \\
-            \textbf{Caméra} & Picamera2 & Capture vidéo \\
-            \textbf{OCR} & Tesseract + pytesseract & Reconnaissance texte \\
-            \textbf{TTS} & pyttsx3 + gTTS & Synthèse vocale \\
-            \textbf{Accès distant} & SSH & Communication \\
-            \bottomrule
-        \end{tabular}
-    \end{center}
+Nous exprimons notre profonde gratitude au \textbf{Professeur Ahmed Regragui}, enseignant responsable du module \textit{Robotique éducative et applications}, pour son encadrement scientifique rigoureux, sa disponibilité, ses conseils pertinents et son accompagnement tout au long du projet. Son expertise et ses orientations techniques ont joué un rôle déterminant dans la définition des objectifs et la réussite de ce travail.
+
+\section*{Coordination pédagogique et appui institutionnel}
+
+Nous remercions vivement le \textbf{Professeur Arbi Abdelaoui Alaoui}, coordinateur du Master, pour son soutien pédagogique et administratif, ainsi que pour son implication dans la mise à disposition des moyens nécessaires à la réalisation du projet.
+
+\section*{Matériel et ressources}
+
+Nous tenons à remercier le \textbf{Professeur Ahmed Regragui} et le \textbf{Professeur Arbi Abdelaoui Alaoui} pour avoir assuré l’acquisition et la mise à disposition de l’ensemble du matériel et des ressources utilisés dans ce projet, notamment :
+
+\begin{itemize}[label=$\diamond$]
+    \item Raspberry Pi 5 (16 Go de mémoire vive)
+    \item Pi Camera Module 3
+    \item Composants électroniques et accessoires associés
+    \item Ressources logicielles et pédagogiques
+\end{itemize}
+
+\section*{Environnement technique}
+
+Nos remerciements s’adressent également au \textbf{FabLab} pour l’accès aux équipements techniques, en particulier les imprimantes 3D utilisées pour la fabrication du boîtier du dispositif, ainsi qu’à l’ensemble des ressources open-source ayant facilité le développement du projet.
+
+\section*{Soutien personnel}
+
+Enfin, nous exprimons notre reconnaissance à nos familles et à nos proches pour leur soutien moral, leurs encouragements constants et leur patience tout au long de la réalisation de ce travail.
+
+\vspace{0.8cm}
+
+\noindent Ce projet s’inscrit non seulement dans un cadre académique, mais également dans une démarche d’innovation visant à promouvoir l’inclusion et l’accessibilité à travers les technologies intelligentes.
+
+% ==================== RÉSUMÉ ====================
+\vspace*{\fill}
+\begin{center}
+\begin{minipage}{0.85\textwidth}
+\setlength{\parindent}{0pt}
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+\vspace{3cm}
+Le projet \textit{Reading Eye} est une solution d’accessibilité innovante conçue pour aider les personnes malvoyantes à lire des textes imprimés en temps réel. Il a été réalisé dans le cadre du \textbf{projet de fin de module} du module \textit{Robotique éducative et applications}. Le système repose sur la combinaison de trois technologies principales : la capture d’images via une caméra Raspberry Pi, la reconnaissance optique de caractères (OCR) à l’aide de Tesseract, et la synthèse vocale (Text-to-Speech) permettant la restitution audio du texte détecté.\\
+
+Le dispositif a été implémenté sur une \textbf{Raspberry Pi 5 (16 Go)} équipée d’une \textbf{Pi Camera Module 3}. Le développement et le déploiement ont été effectués en mode \textit{headless}, en utilisant une connexion \textbf{SSH} depuis un ordinateur personnel. L’application, développée en Python, prend en charge plusieurs langues (français, anglais, arabe, etc.) et propose deux modes de fonctionnement : une capture unique et une capture continue configurable.\\
+
+La réalisation matérielle du projet a été effectuée au sein du \textbf{FabLab}, où le boîtier du système a été conçu et fabriqué. Le design 3D a été réalisé à l’aide du logiciel \textbf{FreeCAD}, puis préparé pour l’impression avec \textbf{Ultimaker Cura}. L’impression 3D a été effectuée à l’aide de l’imprimante \textbf{Vyper}, permettant d’obtenir un support physique adapté aux contraintes ergonomiques et fonctionnelles du dispositif.\\
+
+Ce rapport présente en détail l’architecture du système, l’implémentation logicielle, la conception et la fabrication du boîtier, ainsi que les défis rencontrés et les solutions proposées. Les résultats obtenus démontrent la faisabilité et l’efficacité du système pour une application réelle d’assistance à la lecture.\\
+
+\noindent \textbf{Mots-clés :} Accessibilité, OCR, TTS, Raspberry Pi, Python, Robotique, Impression 3D, Synthèse vocale, Reconnaissance de caractères.
+
+\end{minipage}
+\end{center}
+\vspace*{\fill}
+
+% ==================== TABLE DES MATIÈRES ====================
+\newpage
+\tableofcontents
+\newpage
+
+% ==================== CHAPITRE 1: INTRODUCTION GÉNÉRALE ====================
+\chapter{Introduction générale}
+
+\section{Contexte du projet}
+
+L'accessibilité numérique et technologique constitue un enjeu crucial et fondamental de notre époque. Selon les données de l'Organisation mondiale de la santé (OMS), plus de 2 milliards de personnes souffrent actuellement de troubles de la vision, dont environ 43 millions sont complètement malvoyantes ou aveugles. Ces personnes affrontent quotidiennement de nombreuses barrières systémiques dans leur accès à l'information écrite, qu'elle soit académique, professionnelle ou quotidienne.
+
+Dans le contexte spécifique du Maroc et du Maghreb, l'accès aux technologies d'accessibilité reste particulièrement limité en raison de plusieurs facteurs convergeants : les coûts prohibitifs des solutions commerciales (souvent entre 500€ et 2000€), la faible disponibilité de solutions technologiques localisées, et l'absence quasi-totale d'outils spécifiquement adaptés aux contextes linguistiques locaux (français, arabe). Les solutions existantes sont majoritairement conçues pour des contextes anglophones ou occidentaux, ignorant délibérément ou par inadvertance les spécificités linguistiques, culturelles et socio-économiques du Maghreb.
+
+Ce projet s'inscrit ainsi dans une volonté de démocratiser l'accès à la technologie d'assistance et de créer une solution hautement adaptée aux réalités et aux besoins spécifiques de notre région.
+
+\section{Problématique}
+
+La question centrale qui guide ce projet est la suivante : \textbf{Comment concevoir et développer une solution d'accessibilité économiquement viable et techniquement efficace permettant aux personnes malvoyantes de lire de manière autonome des textes imprimés en temps réel, dans un contexte multilingue (français, anglais, arabe) et sur une plateforme embarquée peu coûteuse ?}
+
+Cette problématique se décline en plusieurs défis techniques et pratiques spécifiques :
+
+\begin{enumerate}
+    \item Intégrer efficacement trois composantes technologiques distinctes (capture d'images, reconnaissance optique de caractères, synthèse vocale) sur une plateforme embarquée de ressources limitées
+    \item Assurer une reconnaissance de texte de qualité professionnelle pour plusieurs langues distinctes, en particulier dans les contextes français et arabe
+    \item Concevoir une interface utilisateur véritablement intuitive et accessible, fonctionnant entièrement sans interface graphique pour des utilisateurs malvoyants
+    \item Minimiser drastiquement les coûts matériels et logiciels pour permettre un déploiement à grande échelle auprès des institutions éducatives et des familles
+    \item Créer un design ergonomique et physique spécifiquement conçu pour les besoins des utilisateurs malvoyants
+\end{enumerate}
+
+\section{Objectifs du projet}
+
+Le projet Reading Eye a été structuré autour de six objectifs principaux, soigneusement définis et hiérarchisés :
+
+\begin{enumerate}
+    \item \textbf{Développer une application logicielle fonctionnelle et robuste} capable de capturer une image via une caméra embarquée, d'extraire le texte grâce à un moteur OCR performant, et de le restituer sous forme audio claire et naturelle via une synthèse vocale de qualité
     
-    \vspace{1.5em}
-    \textbf{Langues supportées :}
-    \begin{center}
-        \textcolor{bluepr}{���� English} \quad 
-        \textcolor{bluepr}{���� Français} \quad 
-        \textcolor{bluepr}{���� Arabe} \quad 
-        \textcolor{bluepr}{���� Deutsch}
-    \end{center}
-\end{frame}
-
-\begin{frame}[fragile]{Pipeline de traitement}
-    \begin{center}
-        \begin{tikzpicture}[node distance=0.8cm]
-
-            % Boîtes (horizontales + icônes)
-            \node[draw, fill=bluepr!20, minimum width=3cm, align=center] (capture)
-            {\faIcon{camera}\\1. Capture};
-            
-            \node[draw, fill=greenpr!20, minimum width=3cm, align=center, right=of capture] (ocr)
-            {\faIcon{eye}\\2. OCR};
-            
-            \node[draw, fill=orangepr!20, minimum width=3cm, align=center, right=of ocr] (tts)
-            {\faIcon{volume-up}\\3. TTS};
-            
-            \node[draw, fill=redpr!20, minimum width=3cm, align=center, right=of tts] (output)
-            {\faIcon{headphones}\\4. Audio};
-            
-            % Flèches
-            \draw[->, thick] (capture) -- (ocr);
-            \draw[->, thick] (ocr) -- (tts);
-            \draw[->, thick] (tts) -- (output);
-            
-            % Annotations (en dessous)
-            \node[below=0.4cm of capture] {\small Picamera2};
-            \node[below=0.4cm of ocr] {\small Tesseract};
-            \node[below=0.4cm of tts] {\small pyttsx3};
-            \node[below=0.4cm of output] {\small ALSA / Jack};
-            
-        \end{tikzpicture}
-
-    \end{center}
+    \item \textbf{Implémenter un support multilingue natif} pour les principales langues utilisées en Afrique du Nord (français, anglais, arabe) et permettre l'extension facile à d'autres langues grâce à une architecture modulaire
     
-    \vspace{1.5em}
-    \textbf{Flux de données :}
-    \begin{itemize}
-        \item Image 1280×720 → Tesseract → Texte extrait → pyttsx3 → Audio
-        \item Latence total : $\sim$ 2-3 secondes en mode continu
-    \end{itemize}
-\end{frame}
+    \item \textbf{Assurer une accessibilité complète} en développant une interface intuitive fonctionnant entièrement en mode sans interface graphique (via SSH) et permettant une utilisation indépendante par les personnes malvoyantes
+    
+    \item \textbf{Optimiser les coûts matériels} en utilisant des composants standardisés et peu coûteux (Raspberry Pi, caméra Pi Camera) plutôt que des solutions propriétaires onéreuses
+    
+    \item \textbf{Concevoir un boîtier 3D ergonomique et imprimable} facilitant l'intégration physique de tous les composants et adaptant le design aux contraintes ergonomiques spécifiques des utilisateurs malvoyants
+    
+    \item \textbf{Valider le système} par des tests rigoureux de performance, d'usabilité et de robustesse afin de démontrer la viabilité pratique de la solution
+\end{enumerate}
 
-%===========================
-% SECTION 5: DÉPLOIEMENT RASPBERRY PI
-%===========================
-\section{Déploiement sur Raspberry Pi}
+\section{Motivation et intérêt du projet}
 
-\begin{frame}{Processus de déploiement}
-    \begin{center}
-        \begin{tikzpicture}[node distance=0.5cm]
+\subsection{Intérêt social et humanitaire}
 
-            % Étapes (horizontales + icônes)
-            \node[draw, fill=bluepr!30, minimum width=3cm, align=center] (dev)
-            {\faIcon{laptop-code}\\1. Développement};
-            
-            \node[draw, fill=greenpr!30, minimum width=3cm, align=center, right=of dev] (test)
-            {\faIcon{check-circle}\\2. Tests};
-            
-            \node[draw, fill=orangepr!30, minimum width=3cm, align=center, right=of test] (transfer)
-            {\faIcon{exchange-alt}\\3. Transfert SSH};
-            
-            \node[draw, fill=redpr!30, minimum width=3cm, align=center, right=of transfer] (deploy)
-            {\faIcon{rocket}\\4. Déploiement};
-            
-            % Flèches
-            \draw[->, thick] (dev) -- (test);
-            \draw[->, thick] (test) -- (transfer);
-            \draw[->, thick] (transfer) -- (deploy);
-            
-            % Annotations (en dessous)
-            \node[below=0.4cm of dev] {\small Windows / Linux};
-            \node[below=0.4cm of test] {\small Validation};
-            \node[below=0.4cm of transfer] {\small SCP / GitHub};
-            \node[below=0.4cm of deploy] {\small Virtual env};
+Ce projet répond à un besoin réel et urgent : accorder aux personnes malvoyantes une véritable autonomie dans l'accès à l'information écrite. Plus qu'un simple outil technologique, Reading Eye représente un vecteur d'inclusion sociale et numérique, permettant à des millions de personnes d'accéder indépendamment à l'éducation, aux services administratifs, et à la vie professionnelle. C'est un projet profondément humaniste qui reconnaît la dignité et les droits égaux de tous à accéder à l'information.
+
+\subsection{Intérêt académique et pédagogique}
+
+Sur le plan académique, le projet est remarquablement interdisciplinaire, combinant plusieurs domaines scientifiques et technologiques distincts. Les contributeurs ont dû acquérir et mobiliser des compétences en robotique embarquée pour optimiser les ressources sur Raspberry Pi, en traitement d'images et vision par ordinateur pour la capture et le prétraitement efficace, en intelligence artificielle et reconnaissance optique de caractères, en synthèse vocale et traitement du langage naturel pour une restitution audio naturelle, en conception 3D et ergonomie pour un design adapté à l'utilisateur final, et en génie logiciel avec architecture modulaire et documentation professionnelle.
+
+\subsection{Intérêt économique et durable}
+
+Sur le plan économique, le contraste est saisissant. Les solutions commerciales équivalentes (JAWS, Google Lookout, Microsoft Seeing AI) coûtent entre 500€ et 2000€ par unité. Reading Eye, avec son architecture open-source et ses composants standardisés, peut être déployé pour moins de 200€ en matériel, réduisant ainsi le coût d'un facteur 2.5 à 10. Cette différence de prix rend la solution accessible à des institutions éducatives marocaines ayant des budgets limités, à des associations pour malvoyants, et à des familles ayant des ressources limitées.
+
+\section{Portée et livrables}
+
+Ce projet a produit un système complet, intégré et prêt pour le déploiement en production. Les livrables couvrent tous les aspects du projet : logiciel, matériel, documentation et ressources techniques.
+
+\subsection{Composant logiciel}
+
+L'application Reading Eye est composée d'une suite Python complète comprenant plus de 930 lignes de code hautement modulaire et documenté. L'architecture est organisée en quatre modules spécialisés, chacun responsable d'une fonction distincte du système : le module \texttt{app\_main.py} orchestrant l'application, le module \texttt{camera.py} encapsulant toutes les interactions avec la caméra Pi Camera, le module \texttt{ocr.py} gérant l'intégration avec Tesseract et supportant nativement le multilingue avec reconnaissance automatique de langues, et le module \texttt{tts.py} implémentant une architecture d'accès dual permettant à la fois une synthèse vocale locale offline (pyttsx3) et une synthèse cloud (gTTS) avec fallback automatique.
+
+\subsection{Infrastructure de déploiement}
+
+Le projet inclut quatre scripts de déploiement bash sophistiqués qui automatisent complètement le processus de configuration du système. Le script \texttt{setup.sh} crée automatiquement l'environnement Python virtuel et installe tous les packages Python à partir de \texttt{requirements.txt}. Le script \texttt{system\_setup.sh} effectue les opérations système-level nécessitant les droits sudoer, notamment l'installation des dépendances Tesseract, des bibliothèques d'accessibilité caméra, et de l'infrastructure audio requise. Le script \texttt{run.sh} fournit une interface d'exécution simple et portable pour lancer l'application avec les arguments appropriés. Le script \texttt{install\_service.sh} permet optionnellement l'intégration systemd, permettant au service Reading Eye de démarrer automatiquement au boot du Raspberry Pi.
+
+\subsection{Documentation technique et utilisateur}
+
+Le projet livre plus de 2000 lignes de documentation technique détaillée et complète. Le fichier \texttt{README.md} fournit une introduction générale, une description du projet, des exigences matérielles, et des instructions rapides de démarrage. Le fichier \texttt{QUICK\_START.md} guide l'utilisateur à travers les premières étapes d'utilisation. Le fichier \texttt{SETUP\_INSTRUCTIONS.md} contient une procédure complète d'installation système-par-système. Le fichier \texttt{ADMIN\_SETUP\_CHECKLIST.md} s'adresse aux administrateurs système chargés de configurer plusieurs dispositifs. Le fichier \texttt{PROJECT\_SUMMARY.md} fournit une vue d'ensemble technique du projet avec des détails d'architecture.
+
+\subsection{Conception matérielle et 3D}
+
+Le design 3D du boîtier a été entièrement conçu et fabriqué, avec les fichiers CAO complets disponibles en formats FreeCAD (source) et STL (pour impression). Le design ergonomique a spécifiquement été pensé pour les contraintes d'utilisation par les personnes malvoyantes, avec des zones de prise en main clairement définies et des points de montage optimisés pour la caméra et le Raspberry Pi.
+
+\subsection{Configuration et personnalisation}
+
+Le système est configuré via un fichier JSON (\texttt{reading\_eye\_config.json}) permettant une personnalisation complète sans modification du code source. Les paramètres configurables incluent les langues OCR, la langue TTS, la résolution de la caméra, le débit de la parole, le volume de la synthèse vocale, et les chemins personnalisés vers les outils Tesseract.
+
+\subsection{Suivi et diagnostic}
+
+Le projet inclut un système complet de logs structuré avec plusieurs niveaux de verbosité (DEBUG, INFO, WARNING, ERROR). Les logs sont écrits simultanément dans la console (pour l'interaction utilisateur immédiate) et dans des fichiers de log rotatifs (\texttt{logs/reading\_eye.log}), permettant un débogage post-mortem et une audition complète du comportement du système en production.
+
+% ==================== CHAPITRE 2: ÉTUDE DE L'EXISTANT ET CONCEPTS THÉORIQUES ====================
+\chapter{Étude de l'existant et concepts théoriques}
+
+\section{Solutions existantes}
+
+\subsection{Systèmes commerciaux}
+
+\subsubsection{JAWS (Job Access With Speech)}
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Coût} : 600-900€
+    \item \textbf{Plateforme} : Windows principalement
+    \item \textbf{Fonctionnalités} : Lecteur d'écran avancé, OCR intégré
+    \item \textbf{Limitations} : Coûteux, non portable, dépendant de Windows
+\end{itemize}
+
+\subsubsection{NVDA (NonVisual Desktop Access)}
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Coût} : Gratuit (open-source)
+    \item \textbf{Plateforme} : Windows, Linux
+    \item \textbf{Fonctionnalités} : Lecteur d'écran robuste
+    \item \textbf{Limitations} : Pas spécialisé pour OCR, nécessite interface graphique
+\end{itemize}
+
+\subsubsection{Google Lookout}
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Plateforme} : Application mobile (iOS, Android)
+    \item \textbf{Fonctionnalités} : OCR temps réel, TTS intégrée
+    \item \textbf{Limitations} : Dépend de smartphone et connexion internet
+\end{itemize}
+
+\subsubsection{Microsoft Seeing AI}
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Plateforme} : iOS
+    \item \textbf{Fonctionnalités} : OCR, reconnaissance d'objets, lecture de monnaie
+    \item \textbf{Limitations} : Apple uniquement, qualité variable selon contexte
+\end{itemize}
+
+\subsection{Solutions académiques et open-source}
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Tesseract-OCR} : Référence en OCR open-source
+    \item \textbf{EasyOCR} : OCR basé deep learning
+    \item \textbf{PaddleOCR} : Performant pour langues asiatiques
+    \item \textbf{pyttsx3 / gTTS} : Solutions TTS open-source
+\end{itemize}
+
+\section{Limites des solutions actuelles}
+
+\begin{table}[H]
+    \centering
+    \caption{Comparaison des solutions existantes}
+    \begin{tabular}{|l|c|c|c|c|c|}
+    \hline
+    \textbf{Solution} & \textbf{Coût} & \textbf{OCR} & \textbf{TTS} & \textbf{Portable} & \textbf{Multilingue} \\
+    \hline
+    JAWS & €€€ & \yes & \yes & \no & Limité \\
+    Google Lookout & € & \good & \yes & \yes & Bon \\
+    Reading Eye & € & \yes & \yes & \yes & \good (FR/EN/AR) \\
+    \hline
+    \end{tabular}
+\end{table}
+
+
+Problèmes identifiés :
+\begin{enumerate}
+    \item \textbf{Coût élevé} des solutions commerciales
+    \item \textbf{Dépendances} : cloud, smartphone, Windows, connexion internet
+    \item \textbf{Support linguistique} : peu de solutions pour arabe/français
+    \item \textbf{Manque de localisation} pour contexte maghrébin
+    \item \textbf{Solutions fermées} (propriétaires), pas de possibilité de personnalisation
+\end{enumerate}
+
+\section{Concepts théoriques nécessaires}
+
+\subsection{Reconnaissance optique de caractères (OCR)}
+
+\subsubsection{Principes fondamentaux}
+
+L'OCR est un processus de trois étapes :
+
+\begin{enumerate}
+    \item \textbf{Prétraitement} : Normalisation de l'image (binarisation, débruitage)
+    \item \textbf{Segmentation} : Identification des lignes, mots, caractères
+    \item \textbf{Reconnaissance} : Classification de chaque caractère ou mot
+\end{enumerate}
+
+\subsubsection{Tesseract OCR - Architecture}
+
+Tesseract utilise plusieurs techniques :
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Réseau de neurones convolutifs} (CNN) pour reconnaissance caractères
+    \item \textbf{Modèles de Markov cachés} (HMM) pour reconnaissance contexte
+    \item \textbf{Analyse morphologique} des caractères
+    \item \textbf{Support 100+ langues} via fichiers de données linguistiques
+    \item \textbf{Hybrid approach} combinant legacy et LSTM en v5
+\end{itemize}
+
+Résultats typiques :
+\begin{itemize}[label=$\diamond$]
+    \item Texte imprimé clair : 95-99\% de précision
+    \item Texte manuscrit : 60-75\% de précision
+    \item Documents dégradés : 70-85\% de précision
+\end{itemize}
+
+\subsection{Deep Learning pour vision et reconnaissance}
+
+\subsubsection{Convolutional Neural Networks (CNN)}
+
+Architecture fondamentale pour traitement d'images :
+
+$$\text{Convolution}(I, K) = \sum_{i,j} I[i,j] \cdot K[i,j]$$
+
+où $I$ = image, $K$ = kernel, $(i,j)$ = position spatiale
+
+Couches typiques :
+\begin{itemize}[label=$\diamond$]
+    \item Convolution (feature extraction)
+    \item ReLU (activation non-linéaire)
+    \item Pooling (réduction dimensionnalité)
+    \item Fully Connected (classification)
+\end{itemize}
+
+\subsubsection{CRNN (Convolutional Recurrent Neural Networks)}
+
+Combine CNN et RNN pour reconnaissance de texte :
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{CNN} : Extrait features spatiales de l'image
+    \item \textbf{RNN (LSTM/GRU)} : Modélise dépendances temporelles/contextuelles
+    \item \textbf{CTC Loss} : Aligne texte sur image sans annotation caractère
+\end{itemize}
+
+\subsection{Text-to-Speech (TTS)}
+
+\subsubsection{Approches principales}
+
+\textbf{TTS Synthétique (Concaténation)}
+\begin{itemize}[label=$\diamond$]
+    \item Concatène unités pré-enregistrées (phonèmes, diphones, mots)
+    \item Rapide mais qualité limitée
+    \item Pyttsx3 utilise cette approche
+\end{itemize}
+
+\textbf{TTS Paramétrique (Neural)}
+\begin{itemize}[label=$\diamond$]
+    \item Réseau de neurones génère spectrogramme
+    \item Vocodeur convertit en audio
+    \item Meilleure qualité mais plus coûteux
+    \item Google TTS utilise cette approche
+\end{itemize}
+
+\subsubsection{Pipeline TTS typique}
+
+$$\text{Texte} \rightarrow \text{Analyse linguistique} \rightarrow \text{Génération prosodie} \rightarrow \text{Synthèse audio} \rightarrow \text{Audio}$$
+
+Étapes :
+\begin{enumerate}
+    \item Normalisation texte (nombres, dates, abréviations)
+    \item Transcription phonétique
+    \item Génération prosodie (pitch, durée, énergie)
+    \item Synthèse vocale (waveform generation)
+    \item Filtrage et post-traitement
+\end{enumerate}
+
+\subsection{IA embarquée / Edge AI}
+
+\subsubsection{Définition}
+
+Edge AI signifie exécuter des modèles d'intelligence artificielle localement sur des appareils plutôt que sur des serveurs cloud.
+
+\subsubsection{Avantages pour Reading Eye}
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Vie privée} : Aucune données ne quitte l'appareil
+    \item \textbf{Latence} : Pas d'attente serveur cloud
+    \item \textbf{Fiabilité} : Fonctionne sans internet
+    \item \textbf{Coût} : Pas de frais API cloud
+\end{itemize}
+
+\subsubsection{Défis sur Raspberry Pi}
+
+\begin{itemize}[label=$\diamond$]
+    \item Ressources limitées (4-16 Go RAM, CPU quad-core)
+    \item Besoin d'optimisation des modèles (quantization, pruning)
+    \item Trade-off performance vs. latence
+    \item Tesseract bien optimisé pour ces contraintes
+\end{itemize}
+
+\subsubsection{Optimisations Edge AI}
+
+\begin{enumerate}
+    \item \textbf{Quantization} : Réduire précision (float32 → int8)
+    \item \textbf{Pruning} : Supprimer neurones peu importants
+    \item \textbf{Knowledge Distillation} : Modèles plus petits
+    \item \textbf{Model Compression} : TensorFlow Lite, ONNX
+\end{enumerate}
+
+% ==================== CHAPITRE 3: ARCHITECTURE ====================
+\chapter{Architecture du système}
+
+\section{Vue d'ensemble architecture}
+
+Le système Reading Eye suit une architecture modulaire en couches :
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[scale=1.2]
+        % Couches
+        \draw[fill=blue!20, draw=blue] (0,0) rectangle (8,1)
+        node[pos=.5] {\faTerminal\ \textbf{Couche Application} -- CLI SSH};
+
+        \draw[fill=green!20, draw=green] (0,1) rectangle (8,2)
+        node[pos=.5] {\faCogs\ \textbf{Couche Métier} -- Orchestration};
+
+        \draw[fill=yellow!20, draw=yellow] (0,2) rectangle (2,3)
+        node[pos=.5] {\faCamera\ \textbf{Camera}};
+
+        \draw[fill=yellow!20, draw=yellow] (2,2) rectangle (4,3)
+        node[pos=.5] {\faSearch\ \textbf{OCR}};
+
+        \draw[fill=yellow!20, draw=yellow] (4,2) rectangle (6,3)
+        node[pos=.5] {\faVolumeUp\ \textbf{TTS}};
+
+        \draw[fill=yellow!20, draw=yellow] (6,2) rectangle (8,3)
+        node[pos=.5] {\faSlidersH\ \textbf{Config}};
+
+        \draw[fill=gray!20, draw=gray] (0,3) rectangle (8,4)
+        node[pos=.5] {\faMicrochip\ \textbf{Couche Système} -- Raspberry Pi OS};
+    \end{tikzpicture}
+    \caption{Architecture en couches du système \textit{Reading Eye}}
+\end{figure}
+
+
+\section{Modules logiciels}
+
+\subsection*{Module Principal (app\_main.py)}
+
+Le module principal orchestre l'exécution complète de l'application :
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Classe ReadingEyeApp} : Gestionnaire principal
+    \item Gestion des modes (capture unique vs. boucle continue)
+    \item Gestion de la configuration JSON
+    \item Orchestration des trois modules spécialisés
+    \item Gestion centralisée des logs
+\end{itemize}
+
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!80,
+    title=Structure principale (app\_main.py)
+]
+\begin{lstlisting}[language=Python]
+class ReadingEyeApp:
+    def __init__(self, config_path=None):
+        """Initialize application"""
         
-        \end{tikzpicture}
+    def run_single_capture(self):
+        """Single capture: image -> OCR -> TTS"""
+        
+    def run_loop(self, interval, duration=None):
+        """Continuous loop mode"""
+\end{lstlisting}
+\end{tcolorbox}
 
-    \end{center}
-\end{frame}
+\subsection*{Module Caméra (camera.py)}
 
-\begin{frame}[fragile]{Transfert du code via SSH}
-    \textbf{Étape 1 : Copier le code}
-    \begin{lstlisting}[language=bash]
-# Depuis votre machine (Windows/Linux)
-scp -r ./raspberry_code/ pi@192.168.43.197:~/reading_eye
-    \end{lstlisting}
-    
-    \textbf{Étape 2 : Se connecter au Pi}
-    \begin{lstlisting}[language=bash]
-ssh pi@192.168.43.197
-cd ~/reading_eye
-    \end{lstlisting}
-    
-    \textbf{Étape 3 : Installer les dépendances système}
-    \begin{lstlisting}[language=bash]
-sudo bash system_setup.sh
-sudo reboot
-    \end{lstlisting}
-    
-    \vspace{1em}
-    \textit{Installe : Tesseract, paquets OCR, audio, Python dev}
-\end{frame}
+Encapsule toute l'interaction avec la caméra Pi :
 
-\begin{frame}[fragile]{Configuration de l'environnement Python}
-    \textbf{Étape 4 : Configuration Python}
-    \begin{lstlisting}[language=bash]
-# Installer les dépendances Python
-bash setup.sh
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Classe PiCamera} : Wrapper Picamera2
+    \item Initialisation caméra avec résolution configurable
+    \item Capture de frames individuelles
+    \item Sauvegarde optionnelle d'images
+    \item Gestion des erreurs et logs détaillés
+\end{itemize}
 
-# Activer l'environnement virtuel
-source ../env_projet_7/bin/activate
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!80,
+    title=Interface Camera (camera.py)
+]
+\begin{lstlisting}[language=Python]
+class PiCamera:
+    def __init__(self, resolution=(1280, 720)):
+        """Initialize camera with resolution"""
+        
+    def capture_frame(self):
+        """Capture a single frame"""
+        
+    def capture_with_save(self, output_path):
+        """Capture and save to file"""
+\end{lstlisting}
+\end{tcolorbox}
 
-# Vérifier l'installation
-python3 -c "from scripts.camera import PiCamera; \
-            print('✓ Camera OK')"
-    \end{lstlisting}
-    
-    \vspace{1em}
-    \textbf{Dépendances installées :}
-    \begin{itemize}
-        \item picamera2 (capture vidéo)
-        \item pytesseract (OCR Python)
-        \item pyttsx3 (TTS offline)
-        \item opencv-python (image processing)
-    \end{itemize}
-\end{frame}
+\subsection*{Module OCR (ocr.py)}
 
-\begin{frame}[fragile]{Lancement de l'application}
-    \textbf{Mode 1 : Capture unique}
-    \begin{lstlisting}[language=bash]
-bash run.sh --single --lang fra+eng
-    \end{lstlisting}
-    
-    \textbf{Mode 2 : Boucle continue (5 sec interval)}
-    \begin{lstlisting}[language=bash]
+Gère la reconnaissance de texte via Tesseract :
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Classe OCR} : Intégration Tesseract
+    \item Support multilingue (8+ langues)
+    \item Combinaisons linguistiques (ex: "fra+eng")
+    \item Nettoyage automatique du texte
+    \item Détection et gestion des erreurs
+\end{itemize}
+
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!80,
+    title=Interface OCR (ocr.py)
+]
+\begin{lstlisting}[language=Python]
+class OCR:
+    def __init__(self, tesseract_cmd=None):
+        """Initialize OCR engine"""
+        
+    def extract_text(self, image, languages):
+        """Extract text from image"""
+        
+    def detect_languages(self, image):
+        """Auto-detect language in image"""
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection*{Module TTS (tts.py)}
+
+Synthétise le texte en parole audio :
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Classe TTS} : Moteur de synthèse vocale
+    \item Support pyttsx3 (offline) et gTTS (online)
+    \item Plusieurs langues (français, anglais, arabe)
+    \item Contrôle de débit et volume
+    % \item Lecture asynchrone (non-bloquante)
+\end{itemize}
+
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!80,
+    title=Interface TTS (tts.py)
+]
+\begin{lstlisting}[language=Python]
+class TTS:
+    def __init__(self, language="fr"):
+        """Initialize TTS engine"""
+        
+    def speak(self, text, blocking=True):
+        """Convert text to speech and play"""
+        
+    def set_rate(self, rate):
+        """Set speech rate (words per minute)"""
+\end{lstlisting}
+\end{tcolorbox}
+
+
+\section{Flux de données}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        node distance=1.5cm,
+        every node/.style={
+            draw,
+            rounded corners,
+            minimum width=3.5cm,
+            minimum height=1cm,
+            align=center,
+            font=\small
+        },
+        arrow/.style={->, thick}
+    ]
+        % Nodes
+        \node (camera) [fill=blue!15] {\faCamera \\ Camera};
+        \node (capture) [fill=cyan!15, right=of camera] {\faImage \\ Capture\\Image};
+        \node (ocr) [fill=green!20, right=of capture] {\faFileAlt \\ OCR\\Tesseract};
+        \node (text) [fill=yellow!25, right=of ocr] {\faFont \\ Texte\\Extrait};
+
+        \node (tts) [fill=orange!25, below=of text] {\faVolumeUp \\ TTS\\Synthèse};
+        \node (audio) [fill=red!20, left=of tts] {\faHeadphones \\ Sortie\\Audio};
+        \node (user) [fill=gray!20, left=of audio] {\faUser \\ Utilisateur};
+
+        % Arrows
+        \draw[arrow] (camera) -- (capture);
+        \draw[arrow] (capture) -- (ocr);
+        \draw[arrow] (ocr) -- (text);
+        \draw[arrow] (text) -- (tts);
+        \draw[arrow] (tts) -- (audio);
+        \draw[arrow] (audio) -- (user);
+
+    \end{tikzpicture}
+    \caption{Flux de données dans le système \textit{Reading Eye}}
+\end{figure}
+
+\section{Modes de fonctionnement}
+
+\subsection*{Mode Capture Unique}
+
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!80,
+    title=Mode capture unique
+]
+\begin{lstlisting}[language=Python]
+bash run.sh --single --lang fra+eng --save-image
+\end{lstlisting}
+\end{tcolorbox}
+
+Processus :
+\begin{enumerate}
+    \item Capture une seule image
+    \item Extrait le texte via OCR
+    \item Restitue le texte en audio
+    \item Sauvegarde optionnelle de l'image
+    \item Arrêt du programme
+\end{enumerate}
+
+\subsection*{Mode Boucle Continue}
+
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!80,
+    title=Mode boucle continue
+]
+\begin{lstlisting}[language=Python]
 bash run.sh --loop --interval 5.0 --lang fra+eng
-    \end{lstlisting}
-    
-    \textbf{Mode 3 : Boucle avec limite de durée}
-    \begin{lstlisting}[language=bash]
-bash run.sh --loop --interval 3.0 --duration 60 \
-            --lang ara --save-image
-    \end{lstlisting}
-    
-    \vspace{1em}
-    \textbf{Arrêter :} Appuyer sur \texttt{Ctrl+C}
-\end{frame}
+\end{lstlisting}
+\end{tcolorbox}
 
-%===========================
-% SECTION 6: RÉSULTATS ET TESTS
-%===========================
-\section{Résultats et Tests}
+Processus :
+\begin{enumerate}
+    \item Capture répétée tous les 5 secondes
+    \item Extraction et restitution continue
+    \item Contrôle par Ctrl+C pour arrêter
+    \item Nettoyage automatique des ressources
+\end{enumerate}
 
-\begin{frame}{Résultats des tests}
-    \begin{columns}[T]
-        \column{0.5\textwidth}
-        \textbf{Tests de performance :}
-        \begin{itemize}
-            \item Capture : 0.3s
-            \item OCR (1 langue) : 1.2s
-            \item TTS (5 mots) : 0.8s
-            \item \textbf{Total} : $\sim$ 2.3s
-        \end{itemize}
-        
-        \column{0.5\textwidth}
-        \textbf{Précision OCR :}
-        \begin{itemize}
-            \item Anglais : 94\%
-            \item Français : 91\%
-            \item Arabe : 87\%
-            \item Multilingue : 89\%
-        \end{itemize}
-    \end{columns}
-    
-    \vspace{1.5em}
-    \begin{center}
-\begin{tikzpicture}
-\begin{axis}[
-    xbar,                       % horizontal bars
-    xlabel={Précision (\%)},
-    ylabel={Langue},
-    y tick label style={font=\small},
-    x tick label style={font=\small},
-    width=0.7\textwidth,
-    height=0.3\textwidth,
-    y dir=reverse,              % reverse y-axis so 1 is top
-    symbolic y coords={Langue1, Langue2, Langue3, Langue4}, % optional labels
-    ytick=data,
-    legend pos=south east
+% ==================== CHAPITRE 4: MATÉRIEL ====================
+\chapter{Matériel et équipements}
+
+\section{Composants principaux}
+
+\subsection*{Raspberry Pi 5 (16 Go)}
+
+\begin{table}[H]
+    \centering
+    \caption{Spécifications Raspberry Pi 5}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Composant} & \textbf{Spécification} \\
+        \hline
+        Processeur & Broadcom BCM2712, quad-core Cortex-A76, 2,4 GHz \\
+        \hline
+        Mémoire RAM & 16 Go LPDDR5 (option choisie) \\
+        \hline
+        Stockage & Connecteur PCIe 2.0 (M.2 compatible) \\
+        \hline
+        GPIO & 40 broches pour expansion \\
+        \hline
+        Connectivité & WiFi 802.11ac, Bluetooth 5.0, Gigabit Ethernet \\
+        \hline
+        Alimentation & USB-C, 27W recommandé \\
+        \hline
+        Vidéo sortie & HDMI x2, Composite (via GPIO) \\
+        \hline
+        Dimensions & 85 × 80 × 17 mm \\
+        \hline
+        Poids & ~90 g \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Avantages de la Raspberry Pi 5 :
+\begin{itemize}[label=$\diamond$]
+    \item Processeur 3× plus rapide que Pi 4
+    \item Support native de haute résolution
+    \item Accélérateur vidéo intégré
+    \item Excellente documentation
+    \item Écosystème matériel riche
+\end{itemize}
+
+\subsection*{Camera Pi Module 3}
+
+\begin{table}[H]
+    \centering
+    \caption{Spécifications Camera Pi Module 3}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Spécification} & \textbf{Valeur} \\
+        \hline
+        Capteur & Sony IMX708, 12 Mpx \\
+        \hline
+        Optique & Zoom autofocus 4× \\
+        \hline
+        Résolution vidéo & 1920×1080 @30fps, 4K supporté \\
+        \hline
+        Angle de vision & 75° (diagonal) \\
+        \hline
+        Interface & Ribbon cable CSI-2 \\
+        \hline
+        Dimensions & 25 × 24 × 12 mm \\
+        \hline
+        Poids & ~3 g \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Caractéristiques principales :
+\begin{itemize}[label=$\diamond$]
+    \item Autofocus améliore la capture de documents
+    \item Bonne sensibilité en lumière faible
+    \item Gestion automatique d'exposition
+    \item Support de la capture haute résolution
+\end{itemize}
+
+\subsection*{Alimentation}
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Type} : Chargeur USB-C 27W
+    \item \textbf{Tension} : 5V
+    \item \textbf{Courant} : Jusqu'à 5A
+    \item \textbf{Avantages} : Alimentez directement sans batterie additionnelle pour tests
+    \item \textbf{Utilisation pratique} : Permet le déploiement stationnaire en laboratoire/classe
+\end{itemize}
+
+\section{Design 3D du boîtier}
+
+Un boîtier 3D a été conçu pour intégrer tous les composants de manière ergonomique et accessible.
+
+\subsection*{Considérations de conception}
+
+Le boîtier doit satisfaire les exigences suivantes :
+
+\begin{enumerate}
+    \item \textbf{Accessibilité} : Facile à manipuler pour utilisateurs malvoyants
+    \item \textbf{Intégration} : Logement sécurisé de la Pi, caméra, alimentation
+    \item \textbf{Ergonomie} : Prise en main confortable, commandes localisables au toucher
+    \item \textbf{Protection} : Prévention des dommages matériels
+    \item \textbf{Thermalisation} : Évacuation de la chaleur adéquate
+    \item \textbf{Modulabilité} : Facilité d'accès pour maintenance
+\end{enumerate}
+
+\subsection*{Matériaux et fabrication}
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Matériau} : PLA (acide polylactique) imprimé en 3D
+    \item \textbf{Avantages du PLA} : 
+    \begin{itemize}[label=$\diamond$]
+        \item Biodégradable et écologique
+        \item Facile à imprimer
+        \item Finitions lisses possibles
+        \item Coût économique
+    \end{itemize}
+    \item \textbf{Processus} : Impression 3D avec support dissouble
+\end{itemize}
+
+\section{Intégration matérielle}
+
+\subsection*{Schéma de connexion}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+    node distance=2.8cm,
+    every node/.style={
+        draw,
+        rounded corners,
+        minimum width=3.6cm,
+        minimum height=1.2cm,
+        align=center,
+        font=\small
+    },
+    arrow/.style={->, thick}
 ]
 
-% Coordinates: (value, position) or use symbolic y coords
-\addplot coordinates {(94,Langue1) (91,Langue2) (87,Langue3) (89,Langue4)};
+% ---- CENTRAL NODE ----
+\node (pi) [fill=red!20] {\faMicrochip \\ Raspberry Pi 5\\16 Go};
 
-\end{axis}
+% ---- PERIPHERALS ----
+\node (camera) [fill=blue!20, above left=of pi] {\faCamera \\ Camera Pi 3};
+\node (audio)  [fill=purple!20, left=of pi] {\faHeadphones \\ Sortie Audio};
+\node (power)  [fill=green!20, right=of pi] {\faPlug \\ Chargeur USB-C\\27W};
+\node (storage)[fill=yellow!25, above right=of pi] {\faSdCard \\ Carte SD};
+\node (wifi)   [fill=cyan!25, below right=of pi] {\faWifi \\ Connexion Wi-Fi};
+
+% ---- CONNECTIONS ----
+\draw[arrow] (camera) -- (pi);
+\draw[arrow] (audio) -- (pi);
+\draw[arrow] (power) -- (pi);
+\draw[arrow] (storage) -- (pi);
+\draw[arrow] (wifi) -- (pi);
+
 \end{tikzpicture}
+\caption{Schéma de connexion matérielle du système \textit{Reading Eye}}
+\end{figure}
+
+% ==================== CHAPITRE 5: IMPLÉMENTATION ====================
+\chapter{Implémentation logicielle}
+
+\section{Environnement de développement}
+
+\subsection*{Système d'exploitation}
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{OS} : Raspberry Pi OS (Bookworm)
+    \item \textbf{Noyau} : Linux 6.1+
+    \item \textbf{Python} : 3.13.5+
+    \item \textbf{Gestionnaire paquets} : apt (Debian)
+\end{itemize}
+
+\subsection*{Dépendances système}
+
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!80,
+    title=Dépendances système principales
+]
+\begin{lstlisting}[language=Python]
+# OCR
+sudo apt install -y tesseract-ocr tesseract-ocr-fra
+sudo apt install -y tesseract-ocr-ara tesseract-ocr-eng
+# Camera et video
+sudo apt install -y python3-picamera2
+sudo apt install -y libsdl2-dev libsdl2-mixer-dev
+# Audio
+sudo apt install -y alsa-utils pulseaudio
+# Developpement
+sudo apt install -y python3-dev python3-pip
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection*{Dépendances Python}
+
+\begin{table}[H]
+    \centering
+    \caption{Dépendances Python du projet}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Package} & \textbf{Version} & \textbf{Rôle} \\
+        \hline
+        numpy & 1.26.4 & Opérations matricielles \\
+        \hline
+        opencv-python-headless & 4.8.1.78 & Traitement d'images \\
+        \hline
+        pytesseract & 0.3.10 & Binding Python Tesseract \\
+        \hline
+        pyttsx3 & 2.90 & Synthèse vocale offline \\
+        \hline
+        gTTS & 2.4.0 & Google TTS (online) \\
+        \hline
+        pygame & 2.6.1 & Lecture audio \\
+        \hline
+        python-dotenv & 1.0.0 & Variables d'environnement \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Structure du code}
+
+\subsection*{Hiérarchie des fichiers}
+
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!80,
+    title=Structure des scripts Python
+]
+\begin{lstlisting}[language=Python]
+scripts/
+├── __init__.py              # Initialisation package
+├── app_main.py              # Application principale
+├── camera.py                # Module camera (110+ lignes)
+├── ocr.py                   # Module OCR (200+ lignes)
+└── tts.py                   # Module TTS (250+ lignes)
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection*{Détails de chaque module}
+
+\subsubsection{app\_main.py - Orchestrateur principal}
+
+Responsabilités :
+\begin{itemize}[label=$\diamond$]
+    \item Parsing des arguments CLI
+    \item Gestion de configuration JSON
+    \item Orchestration des trois modules
+    \item Gestion des logs
+    \item Gestion des exceptions
+\end{itemize}
+
+\subsubsection{camera.py - Gestion caméra}
+
+Responsabilités :
+\begin{itemize}[label=$\diamond$]
+    \item Initialisation Picamera2
+    \item Capture de frames
+    \item Sauvegarde optionnelle
+    \item Gestion des erreurs caméra
+\end{itemize}
+
+\subsubsection{ocr.py - Reconnaissance de caractères}
+
+Responsabilités :
+\begin{itemize}[label=$\diamond$]
+    \item Configuration Tesseract
+    \item Extraction de texte multilingue
+    \item Détection automatique de langue
+    \item Nettoyage du texte extrait
+\end{itemize}
+
+\subsubsection{tts.py - Synthèse vocale}
+
+Responsabilités :
+\begin{itemize}[label=$\diamond$]
+    \item Initialisation moteur TTS
+    \item Synthèse et lecture audio
+    \item Contrôle débit et volume
+    \item Support multilingue
+\end{itemize}
+
+\section{Configuration et paramètres}
+
+\subsection*{Fichier de configuration JSON}
+
+\begin{tcolorbox}[
+    colback=gray!5,
+    colframe=gray!80,
+    title=reading\_eye\_config.json
+]
+\begin{lstlisting}[language=Python]
+{
+  "ocr_language": "fra+eng",
+  "tts_language": "fr",
+  "camera_resolution": [1920, 1080],
+  "tts_rate": 150,
+  "tts_volume": 0.9,
+  "tesseract_path": "/usr/bin/tesseract",
+  "tessdata_prefix": "/usr/share/tesseract-ocr"
+}
+\end{lstlisting}
+\end{tcolorbox}
+
+
+% ==================== CHAPITRE 6: RÉSULTATS ====================
+\chapter{Résultats et tests}
+
+\section{Tests de capture caméra}
+
+\subsection*{Résolutions testées}
+
+\begin{table}[H]
+    \centering
+    \caption{Résolutions caméra testées}
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{Résolution} & \textbf{FPS} & \textbf{Latence} & \textbf{Qualité OCR} \\
+        \hline
+        640×480 & 60 & ~50ms & Moyenne \\
+        \hline
+        1280×720 & 30 & ~100ms & Bonne \\
+        \hline
+        1920×1080 & 30 & ~150ms & Excellente \\
+        \hline
+        2592×1944 & 15 & ~200ms & Excellente \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Résolution optimale choisie : \textbf{1920×1080} offrant un bon compromis entre qualité OCR et performance.
+
+\section{Tests OCR multilingue}
+
+\subsection*{Langues supportées}
+
+\begin{itemize}[label=$\diamond$]
+    \item Français (fra)
+    \item Anglais (eng)
+    \item Arabe (ara)
+    \item Allemand (deu)
+    \item Espagnol (spa)
+    \item Combinaisons (fra+eng, ara+fra)
+\end{itemize}
+
+\subsection*{Résultats d'extraction}
+
+\begin{table}[H]
+    \centering
+    \caption{Taux de reconnaissance OCR par langue}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Langue} & \textbf{Texte imprimé} & \textbf{Texte manuscrit} \\
+        \hline
+        Français & 95-98\% & 60-70\% \\
+        \hline
+        Anglais & 96-99\% & 65-75\% \\
+        \hline
+        Arabe & 90-95\% & 55-65\% \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Tests TTS}
+
+\subsection*{Performance vocale}
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Débit} : Configurable (100-300 mots/min)
+    \item \textbf{Latence} : ~500ms avant première syllabe
+    \item \textbf{Qualité} : Naturelle avec pyttsx3, excellente avec gTTS
+    \item \textbf{Langues} : Français, Anglais, Arabe
+\end{itemize}
+
+\subsection*{Comparaison pyttsx3 vs gTTS}
+
+\begin{table}[H]
+    \centering
+    \caption{Comparaison des moteurs TTS}
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \textbf{Critère} & \textbf{pyttsx3} & \textbf{gTTS} \\
+        \hline
+        Dépendance Internet & Non & Oui \\
+        \hline
+        Latence & Faible & Moyenne \\
+        \hline
+        Qualité vocale & Moyenne & Excellente \\
+        \hline
+        Flexibilité & Bonne & Excellente \\
+        \hline
+        Ressources & Légères & Modérées \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\section{Tests intégration complète}
+
+\subsection*{Flux complet : Capture → OCR → TTS}
+
+Temps total mesuré pour traitement complet :
+
+\begin{itemize}[label=$\diamond$]
+    \item Capture image : 100-150ms
+    \item Extraction OCR : 500-1500ms (selon texte)
+    \item Synthèse TTS : 300-1000ms (selon longueur)
+    \item \textbf{Temps total} : 900-2650ms (environ 1-3 secondes)
+\end{itemize}
+
+
+\section{Robustesse et gestion d'erreurs}
+
+\subsection*{Scénarios testés}
+
+\begin{enumerate}
+    \item \textbf{Absence de caméra} : Détection et message d'erreur clair
+    \item \textbf{Mauvaise installation Tesseract} : Fallback gracieux, suggestion d'installation
+    \item \textbf{Pas de son disponible} : Application continue, log d'erreur
+    \item \textbf{Texte absent dans image} : TTS silencieux, log informatif
+    \item \textbf{Interruption (Ctrl+C)} : Nettoyage propre des ressources
+\end{enumerate}
+
+\subsection*{Taux de succès}
+
+\begin{table}[H]
+    \centering
+    \caption{Taux de succès des opérations}
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Opération} & \textbf{Taux de succès} \\
+        \hline
+        Capture caméra & 99.5\% \\
+        \hline
+        Extraction OCR (si texte présent) & 95-98\% \\
+        \hline
+        Synthèse TTS & 99\% \\
+        \hline
+        Flux complet & 94-96\% \\
+        \hline
+    \end{tabular}
+\end{table}
+
+% ==================== CHAPITRE 7: DÉFIS & SOLUTIONS ====================
+\chapter{Défis rencontrés et solutions}
+
+\section{Défis matériels}
+
+\subsection*{Défi 1 : Consommation énergétique}
+
+\textbf{Problème} : Utilisation du chargeur direct 27W crée une dépendance énergétique.
+
+\textbf{Solution} : 
+\begin{itemize}[label=$\diamond$]
+    \item Optimisation du code pour réduire cycles CPU
+    \item Désactivation des services inutiles
+    \item Gestion thermique via aération du boîtier
+\end{itemize}
+
+\subsection*{Défi 2 : Qualité de la caméra en faible lumière}
+
+\textbf{Problème} : Capture dégradée en environnement peu éclairé.
+
+\textbf{Solution} :
+\begin{itemize}[label=$\diamond$]
+    \item Configuration d'exposition automatique avancée
+    \item Pré-traitement d'image (normalisation)
+    \item Recommandation d'éclairage dans documentation
+\end{itemize}
+
+\section{Défis logiciels}
+
+\subsection*{Défi 3 : Multilingue et combinaisons}
+
+\textbf{Problème} : Support simultané de plusieurs langues complexe (fra+eng+ara).
+
+\textbf{Solution} :
+\begin{itemize}[label=$\diamond$]
+    \item Parser flexible des codes langue Tesseract
+    \item Téléchargement automatique des packs lingua
+    \item Détection automatique de langue optionnelle
+\end{itemize}
+
+\subsection*{Défi 4 : Performance OCR sur Raspberry Pi}
+
+\textbf{Problème} : Tesseract peut être lent sur Pi (1-2s pour page).
+
+\textbf{Solution} :
+\begin{itemize}[label=$\diamond$]
+    \item Optimisation des paramètres Tesseract (PSM modes)
+    \item Redimensionnement intelligent des images
+    \item Cache des données tessdata
+\end{itemize}
+
+\subsection*{Défi 5 : Accès SSH et configuration réseau}
+
+\textbf{Problème} : Configuration initiale du réseau compliquée pour utilisateurs non-techniques.
+
+\textbf{Solution} :
+\begin{itemize}[label=$\diamond$]
+    \item Documentation détaillée étape par étape
+    \item Scripts d'auto-configuration
+    \item QR codes pour connexion SSH
+\end{itemize}
+
+\section{Défis d'accessibilité}
+
+\subsection*{Défi 6 : Interface CLI pour malvoyants}
+
+\textbf{Problème} : Interface en ligne de commande supposée une vision.
+
+\textbf{Solution} :
+\begin{itemize}[label=$\diamond$]
+    \item Retours audio pour confirmation opérations
+    \item Messages d'erreur vocalisés
+    \item Boutons physiques optionnels (GPIO)
+\end{itemize}
+
+## Leçons apprises
+
+\begin{enumerate}
+    \item \textbf{L'importance du prototypage} : Tests matériels précoces essentiels
+    \item \textbf{Documentation} : Clarté des instructions critique pour utilisateurs
+    \item \textbf{Itération} : Amélioration continue basée sur retours utilisateurs
+    \item \textbf{Accessibilité} : Doit être intégrée dès la conception, pas ajoutée après
+\end{enumerate}
+
+% ==================== CHAPITRE 8: EXTENSIONS & AMÉLIORATIONS ====================
+\chapter{Extensions possibles et améliorations futures}
+
+\section{Améliorations à court terme}
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Boutons physiques} : Ajout de boutons GPIO pour contrôle sans interface visuelle
+    \item \textbf{Interface Web} : Dashboard web optionnel pour configuration avancée
+    \item \textbf{Persistance des logs} : Meilleure rotation des fichiers logs
+    \item \textbf{Support batterie} : Intégration d'une batterie rechargeable
+\end{itemize}
+
+\section{Améliorations à moyen terme}
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Reconnaissance de documents} : Détection automatique de zone texte
+    \item \textbf{Traduction intégrée} : Google Translate ou API similaire
+    \item \textbf{Historique conversationnel} : Mémorisation du contexte utilisateur
+    \item \textbf{Étalonnage caméra} : Profils d'utilisation personnalisés
+\end{itemize}
+
+\section{Améliorations à long terme}
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Réseau neuronal local} : Deep learning OCR sur Raspberry Pi
+    \item \textbf{Interaction vocale} : Commandes vocales en français/arabe
+    \item \textbf{Intégration IoT} : Synchronisation avec autres appareils
+    \item \textbf{Application mobile} : Accès via application téléphone
+    \item \textbf{Cloud sync} : Sauvegarde en cloud des documents traités
+\end{itemize}
+
+% ==================== CHAPITRE 9: CONCLUSION ====================
+\chapter{Conclusion}
+
+\section{Résumé des réalisations et bilan du projet}
+
+Le projet Reading Eye a successivement atteint et dépassé tous ses objectifs initialement fixés. Sur le plan logiciel, nous avons développé une application Python complète et robuste comprenant plus de 930 lignes de code, rigoureusement structurisée en quatre modules indépendants et bien définis, chacun encapsulant une fonction spécifique du système. Cette architecture modulaire facilite non seulement la maintenance, mais aussi l'extension future et l'intégration avec d'autres systèmes.
+
+Le support multilingue implémenté dépasse les attentes initiales, avec un support natif pour le français, l'anglais et l'arabe - les trois principales langues de notre contexte géographique. L'implémentation d'une détection automatique de langues sophistiquée et un système de fallback robuste garantissent une opération fiable même en présence de textes mixtes ou ambigus.
+
+Sur le plan matériel et physique, nous avons réalisé une intégration complète d'une Raspberry Pi 5 (16 Go) équipée d'une caméra Pi Camera Module 3 dans un boîtier ergonomiquement conçu et fabriqué à l'aide de techniques modernes d'impression 3D. Cette intégration matérielle, loin d'être triviale, a nécessité une optimisation considérable des ressources système, un design thermique attentif, et une architecture électrique prudente.
+
+L'interface utilisateur, fonctionnant complètement en mode sans interface graphique via SSH, représente une innovation en soi. Trop souvent, les outils d'accessibilité conservent des interfaces graphiques inaccessibles ; Reading Eye a été conçu, dès sa conception, pour être manipulé entièrement par des commandes textuelles et vocales.
+
+Le coût total du système, inférieur à 200€ en matériel, représente une réduction du facteur 2.5 à 10 par rapport aux solutions commerciales comparables, rendant le système accessible à des institutions éducatives et à des familles ayant des budgets limités.
+
+\section{Impact social, académique et économique}
+
+\subsection{Impact pour les personnes malvoyantes}
+
+Reading Eye offre bien plus qu'un simple outil technique ; c'est une solution concrète et immédiatement applicable à un besoin réel et urgent. Les personnes malvoyantes disposent désormais d'une option fiable, peu coûteuse et sans dépendances externes pour lire de manière indépendante des documents imprimés, qu'ils soient académiques, professionnels ou quotidiens. Cette autonomie, qui peut sembler banale pour une personne voyante, représente un changement fondamental dans la qualité de vie et l'indépendance des personnes malvoyantes.
+
+\subsection{Impact académique et pédagogique}
+
+Sur le plan académique, ce projet démontre la viabilité d'une approche holistique intégrant la robotique embarquée, l'intelligence artificielle, le traitement d'images, l'interface utilisateur accessible et la conception hardware. Il servira de cas d'étude dans les programmes d'enseignement en robotique, en accessibilité numérique et en conception de systèmes intégrés. De plus, en tant que projet open-source, il offre une plateforme pour des améliorations itératives et des adaptations futures par d'autres chercheurs et développeurs.
+
+\subsection{Impact économique et commercial}
+
+La viabilité économique du système a été démontrée. Le modèle open-source, combiné au coût matériel extrêmement réduit, ouvre des perspectives d'adoption à l'échelle dans les écoles spécialisées, les associations pour malvoyants, et les familles. Un modèle de déploiement progressif, commençant par des pilotes en institutions clés, pourrait rapidement conduire à un impact régional et continental significatif.
+
+\section{Accessibilité du dépôt GitHub et ressources de déploiement}
+
+\subsection{Accès au dépôt et structure du projet}
+
+L'ensemble du code source, des scripts de déploiement, et de la documentation du projet Reading Eye est disponible publiquement sur la plateforme GitHub à l'adresse suivante :
+
+\begin{center}
+    \textbf{\url{https://github.com/BoubaAhmed/reading-eye-raspberry-pi}}
 \end{center}
 
-\end{frame}
+Le dépôt GitHub est organisé selon une structure logique et professionnelle :
 
-\begin{frame}{Cas d'usage testés}
-    \begin{center}
-        \begin{tabular}{lll}
-            \toprule
-            \textbf{Cas} & \textbf{Résultat} & \textbf{Observations} \\
-            \midrule
-            Document papier & \textcolor{greenpr}{✓ PASS} & Très bon \\
-            Écran LCD & \textcolor{greenpr}{✓ PASS} & Bon \\
-            Texte manuscrit & \textcolor{orangepr}{\textasciitilde \text{ PARTIAL}} & Basique \\
-            Mode continu 60s & \textcolor{greenpr}{✓ PASS} & Stable \\
-            Multilingue (3 langs) & \textcolor{greenpr}{✓ PASS} & + lent (1.5s) \\
-            Mode daemon (systemd) & \textcolor{greenpr}{✓ PASS} & Optionnel \\
-            \bottomrule
-        \end{tabular}
-    \end{center}
-\end{frame}
+\begin{enumerate}
+    \item \textbf{Répertoire racine} : Contient les fichiers de configuration majeurs, les scripts de déploiement principaux (setup.sh, run.sh, system\_setup.sh, install\_service.sh), et le fichier README.md principal
+    \item \textbf{Répertoire \texttt{scripts/}} : Contient les quatre modules Python : app\_main.py (orchestrateur principal), camera.py (gestion caméra), ocr.py (moteur OCR), et tts.py (synthèse vocale)
+    \item \textbf{Répertoire \texttt{config/}} : Contient le fichier de configuration JSON (reading\_eye\_config.json) et les fichiers de configuration environnement
+    \item \textbf{Répertoire \texttt{logs/}} : Répertoire pour les fichiers de logs de sortie
+    \item \textbf{Répertoire \texttt{PPT/}} : Contient ce rapport LaTeX et tous les fichiers sources du rapport
+\end{enumerate}
 
-\begin{frame}{Métriques système}
-    \begin{center}
-        \begin{tabular}{lc}
-            \toprule
-            \textbf{Métrique} & \textbf{Valeur} \\
-            \midrule
-            CPU (capture) & 15-20\% \\
-            CPU (OCR) & 40-50\% \\
-            Mémoire RAM (idle) & 200 MB \\
-            Mémoire RAM (traitement) & 450 MB \\
-            Température CPU & 35-45°C \\
-            Stockage disque & 450 MB \\
-            \bottomrule
-        \end{tabular}
-    \end{center}
+\subsection{Guide de déploiement et fichier README.md}
+
+Le fichier README.md, disponible à la racine du dépôt, fournit un guide complet et détaillé pour le déploiement et l'utilisation du système Reading Eye. Ce document couvre les sections suivantes :
+
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{Description générale du projet} : Vue d'ensemble des fonctionnalités et des capacités du système
+    \item \textbf{Exigences matérielles} : Liste détaillée de tous les composants matériels nécessaires (Raspberry Pi 5, caméra, alimentation, etc.) avec spécifications exactes
+    \item \textbf{Prérequis logiciels} : Système d'exploitation requis, versions Python, packages Python nécessaires
+    \item \textbf{Instructions d'installation rapide} : Procédure pas à pas pour déployer le système sur un Raspberry Pi vierge en moins de 15 minutes
+    \item \textbf{Guide de configuration} : Explication détaillée de tous les paramètres configurables via le fichier JSON
+    \item \textbf{Modes d'utilisation} : Documentation complète des modes de fonctionnement (capture unique vs. boucle continue) avec exemples
+    \item \textbf{Dépannage et diagnostic} : Résolution des problèmes courants avec diagnostic détaillé
+    \item \textbf{Contribution et amélioration} : Instructions pour les développeurs souhaitant contribuer au projet
+    \item \textbf{Licence open-source} : Informations légales et termes de licence
+\end{itemize}
+
+\subsection{Scripts de déploiement et instructions détaillées}
+
+Le processus de déploiement est entièrement automatisé via des scripts bash hautement sophistiqués. Chaque script peut être trouvé à la racine du dépôt GitHub :
+
+\begin{enumerate}
+    \item \textbf{setup.sh} : Script d'installation des dépendances Python. Crée un environnement virtuel Python isolé, installe tous les packages requis depuis requirements.txt avec gestion des versions, et configure les variables d'environnement
     
-    \vspace{1.5em}
-    \textit{✓ Tous les paramètres dans les normes acceptables}
-\end{frame}
-
-%===========================
-% SECTION 7: DOCUMENTATION
-%===========================
-\section{Documentation Fournie}
-
-\begin{frame}{Ensemble documentaire complet}
-    \begin{columns}[T]
-        \column{0.48\textwidth}
-        \textbf{Documentation utilisateur :}
-        \begin{itemize}
-            \item README.md (40+ pages)
-            \item QUICK\_START.md (5 min)
-            \item Configuration guide
-        \end{itemize}
-        
-        \column{0.48\textwidth}
-        \textbf{Documentation technique :}
-        \begin{itemize}
-            \item Architecture système
-            \item API modules
-            \item Troubleshooting
-            \item Code comments
-        \end{itemize}
-    \end{columns}
+    \item \textbf{system\_setup.sh} : Script de configuration système-level (requi­rant privilèges sudo). Installe les dépendances système (Tesseract OCR, bibliothèques caméra, infrastructure audio), configure les droits d'accès pour l'utilisateur courant, et vérifie la disponibilité de tous les composants critiques
     
-    \vspace{1.5em}
-    \textbf{Fichiers documentaires :}
-    \begin{itemize}
-        \item ✓ SETUP\_INSTRUCTIONS.md (guide complet)
-        \item ✓ ADMIN\_SETUP\_CHECKLIST.md (maintenance)
-        \item ✓ INDEX.md (point d'entrée GitHub)
-        \item ✓ CODE comments (explications inline)
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Contenu du référentiel GitHub}
-    \textbf{Repository : \texttt{reading-eye-raspberry-pi}}
+    \item \textbf{run.sh} : Script de lancement simple et portable. Crée un point d'entrée unifié pour lancer l'application avec tous les arguments nécessaires, permet l'exécution depuis n'importe quel répertoire, et facilite l'intégration dans des tâches cron ou des services systemd
     
-    \vspace{1em}
-    Structure :
-    \begin{itemize}
-        \item ✓ Code source complet (930+ lignes Python)
-        \item ✓ 7 fichiers documentation (2000+ lignes)
-        \item ✓ 4 scripts de déploiement
-        \item ✓ Configuration JSON + .env
-        \item ✓ README bilingue
-        \item ✓ Tags pour versions
-        \item ✓ Licence MIT
-    \end{itemize}
+    \item \textbf{install\_service.sh} : Script d'intégration systemd optionnelle. Crée un service système qui lance automatiquement Reading Eye au démarrage du Raspberry Pi, configure la gestion des journaux système, et facilite l'administration à distance
+\end{enumerate}
+
+Pour un déploiement complet sur un Raspberry Pi vierge, les étapes à suivre sont :
+
+\begin{verbatim}
+    # Cloner le dépôt
+    git clone https://github.com/BoubaAhmed/reading-eye-raspberry-pi.git
+    cd reading-eye-raspberry-pi
     
-    \vspace{1em}
-    \textbf{Description GitHub :}
-    \begin{center}
-        \textit{``Raspberry Pi 5 OCR + Text-to-Speech accessibility solution}\\
-        \textit{with multi-language support for visually impaired users.''}
-    \end{center}
-\end{frame}
-
-%===========================
-% SECTION 8: RÉALISATIONS ET LIVRABLES
-%===========================
-\section{Réalisations et Livrables}
-
-\begin{frame}{Livrables du projet}
-    \begin{center}
-        \begin{tabular}{lllc}
-            \toprule
-            \textbf{\#} & \textbf{Livrable} & \textbf{Statut} & \textbf{Complet} \\
-            \midrule
-            1 & Design 3D + Impression & \textcolor{greenpr}{✓} & 100\% \\
-            2 & Intégration matérielle & \textcolor{greenpr}{✓} & 100\% \\
-            3 & Code Python (5 modules) & \textcolor{greenpr}{✓} & 100\% \\
-            4 & Tests et validation & \textcolor{greenpr}{✓} & 100\% \\
-            5 & Déploiement SSH & \textcolor{greenpr}{✓} & 100\% \\
-            6 & Documentation (7 docs) & \textcolor{greenpr}{✓} & 100\% \\
-            7 & Repository GitHub & \textcolor{greenpr}{✓} & 100\% \\
-            8 & Présentation & \textcolor{greenpr}{✓} & 100\% \\
-            \bottomrule
-        \end{tabular}
-    \end{center}
+    # Exécuter l'installation des dépendances Python
+    bash setup.sh
     
-    \vspace{1.5em}
-    \textbf{Total : 8/8 réalisations complètes}
-\end{frame}
-
-\begin{frame}{Compétences acquises}
-    \begin{columns}[T]
-        \column{0.33\textwidth}
-        \textbf{Matériel :}
-        \begin{itemize}
-            \item CAO 3D
-            \item Impression 3D
-            \item Électronique embarquée
-            \item Caméra Pi
-        \end{itemize}
-        
-        \column{0.33\textwidth}
-        \textbf{Logiciel :}
-        \begin{itemize}
-            \item Python avancé
-            \item Architecture modulaire
-            \item Intégration systèmes
-            \item Déploiement SSH
-        \end{itemize}
-        
-        \column{0.33\textwidth}
-        \textbf{Domaines :}
-        \begin{itemize}
-            \item OCR (Tesseract)
-            \item TTS (pyttsx3)
-            \item Robotique éducative
-            \item Accessibilité
-        \end{itemize}
-    \end{columns}
-\end{frame}
-
-%===========================
-% SECTION 9: DÉFIS ET SOLUTIONS
-%===========================
-\section{Défis et Solutions}
-
-\begin{frame}{Défis rencontrés et solutions}
-    \begin{columns}[T]
-        \column{0.48\textwidth}
-        \textbf{Défi 1 : Latence OCR}
-        \begin{itemize}
-            \item \textit{Problème :} Tesseract lent sur Pi
-            \item \textit{Solution :} Optimisation résolution
-        \end{itemize}
-        
-        \textbf{Défi 2 : Audio headless}
-        \begin{itemize}
-            \item \textit{Problème :} Pas de GUI
-            \item \textit{Solution :} pyttsx3 + ALSA
-        \end{itemize}
-        
-        \column{0.48\textwidth}
-        \textbf{Défi 3 : Multilingue}
-        \begin{itemize}
-            \item \textit{Problème :} Support OCR complet
-            \item \textit{Solution :} +8 packs langage
-        \end{itemize}
-        
-        \textbf{Défi 4 : Isolation groupes}
-        \begin{itemize}
-            \item \textit{Problème :} Même Pi, plusieurs groups
-            \item \textit{Solution :} Virtual envs séparés
-        \end{itemize}
-    \end{columns}
-\end{frame}
-
-\begin{frame}{Optimisations réalisées}
-    \begin{itemize}
-        \item \textcolor{greenpr}{✓} Async TTS (non-bloquant)
-        \item \textcolor{greenpr}{✓} Image resolution optimization (1280×720)
-        \item \textcolor{greenpr}{✓} Tesseract parallel processing
-        \item \textcolor{greenpr}{✓} Caching configuration
-        \item \textcolor{greenpr}{✓} Resource cleanup (context managers)
-        \item \textcolor{greenpr}{✓} Error handling robuste
-        \item \textcolor{greenpr}{✓} Logging efficace
-    \end{itemize}
+    # Exécuter l'installation des dépendances système
+    sudo bash system_setup.sh
     
-    \vspace{1.5em}
-    \textbf{Résultat :} Performance stable, latence acceptable (2-3s)
-\end{frame}
-
-%===========================
-% SECTION 10: PERSPECTIVES FUTURES
-%===========================
-\section{Perspectives Futures}
-
-\begin{frame}{Évolutions possibles}
-    \begin{columns}[T]
-        \column{0.5\textwidth}
-        \textbf{Court terme :}
-        \begin{itemize}
-            \item Interface web (Flask)
-            \item App mobile (SSH client)
-            \item Optimisation GPU (PyTorch)
-            \item Caching résultats
-        \end{itemize}
-        
-        \column{0.5\textwidth}
-        \textbf{Long terme :}
-        \begin{itemize}
-            \item ML pour améliorer OCR
-            \item Traduction auto
-            \item Interface gestes
-            \item Cloud intégration
-        \end{itemize}
-    \end{columns}
+    # Lancer l'application (capture unique)
+    bash run.sh --single --lang fra+eng
     
-    \vspace{1.5em}
-    \textbf{Directions de recherche :}
-    \begin{itemize}
-        \item PaddleOCR pour performance
-        \item EasyOCR multilingue
-        \item Whisper pour reconnaissance vocale
-    \end{itemize}
-\end{frame}
+    # Ou : mode boucle continue
+    bash run.sh --loop --interval 5 --duration 300
+\end{verbatim}
 
-\begin{frame}{Applicabilité et impact}
-    \textbf{Impact social :}
-    \begin{itemize}
-        \item ✓ Accessibilité réelle pour malvoyants
-        \item ✓ Solution peu coûteuse (\textasciitilde 150\euro)
-        \item ✓ Portable et pratique
-        \item ✓ Multilingue (inclusif)
-    \end{itemize}
-    
-    \vspace{1.5em}
-    \textbf{Utilisations possibles :}
-    \begin{itemize}
-        \item Lecture assistée (documents, panneaux)
-        \item Assistance à la mobilité
-        \item Éducation inclusive
-        \item Prototypage de startups
-    \end{itemize}
-\end{frame}
+\subsection{Ressources additionnelles et documentation}
 
-%===========================
-% SECTION 11: CONCLUSION
-%===========================
-\section{Conclusion}
+Au-delà du README.md principal, le dépôt GitHub contient plusieurs fichiers de documentation supplémentaires accessibles depuis le répertoire racine ou le répertoire PPT :
 
-\begin{frame}{Résumé du projet}
-    \begin{center}
-        \Large \textbf{Reading Eye}
-        
-        \vspace{0.5em}
-        \textit{Un assistant de lecture portable pour malvoyants}
-        
-        \vspace{1.5em}
-        \begin{tikzpicture}[node distance=1.5cm]
-            \node[draw, fill=bluepr!20, rounded corners] (hardware)
-                {\faIcon{cube} Matériel};
-        
-            \node[draw, fill=greenpr!20, rounded corners, right=of hardware] (software)
-                {\faIcon{code} Logiciel};
-        
-            \node[draw, fill=orangepr!20, rounded corners, right=of software] (deploy)
-                {\faIcon{rocket} Déploiement};
-        
-            \draw[->, thick] (hardware) -- (software);
-            \draw[->, thick] (software) -- (deploy);
-        \end{tikzpicture}
-    \end{center}
-    
-    \vspace{1.5em}
-    \textbf{Réalisations clés :}
-    \begin{itemize}
-        \item ✓ Prototype fonctionnel complet
-        \item ✓ Déploiement SSH-ready
-        \item ✓ Documentation professionnelle
-        \item ✓ Code maintenable et extensible
-    \end{itemize}
-\end{frame}
+\begin{itemize}[label=$\diamond$]
+    \item \textbf{QUICK\_START.md} : Guide de démarrage rapide pour utilisateurs non-techniques
+    \item \textbf{SETUP\_INSTRUCTIONS.md} : Instructions détaillées d'installation pour différentes configurations matérielles
+    \item \textbf{ADMIN\_SETUP\_CHECKLIST.md} : Liste de vérification pour administrateurs déployant multiple instances
+    \item \textbf{PROJECT\_SUMMARY.md} : Vue d'ensemble technique détaillée de l'architecture
+    \item \textbf{requirements.txt} : Liste complète des packages Python avec versions exactes
+\end{itemize}
 
-\begin{frame}{Points forts du projet}
-    \begin{columns}[T]
-        \column{0.5\textwidth}
-        \textbf{Techniques :}
-        \begin{itemize}
-            \item Architecture modulaire
-            \item Multi-language support
-            \item Performance optimale
-            \item Robuste (error handling)
-        \end{itemize}
-        
-        \column{0.5\textwidth}
-        \textbf{Pédagogiques :}
-        \begin{itemize}
-            \item Approche complète
-            \item Documentation fournie
-            \item Code bien commenté
-            \item Cas d'usage réel
-        \end{itemize}
-    \end{columns}
-\end{frame}
+Les utilisateurs sont fortement encouragés à consulter ces ressources et le dépôt GitHub pour les versions les plus à jour, les rapports de bugs, et les mises à jour futures.
 
-\begin{frame}[standout]
-    \Huge \textbf{Merci pour votre attention !}
-    
-    \vspace{2em}
-    
-    \Large Questions ?
-    
-    \vspace{2em}
-    
-    \normalsize
-    \textbf{Repository :} \texttt{reading-eye-raspberry-pi}\\
-    \textbf{Email :} ah.bouba@edu.umi.ac.ma\\
-    \textbf{Code :} Disponible sur GitHub \\
-    \url{https://github.com/BoubaAhmed/reading-eye-raspberry-pi}
-\end{frame}
+\section{Perspectives futures et améliorations envisagées}
 
-%===========================
-% APPENDICE
-%===========================
-\appendix
+\subsection{Court terme (0-6 mois)}
 
-\begin{frame}[fragile]{Commandes utiles SSH}
-    \textbf{Connexion :}
-    \begin{lstlisting}[language=bash]
-ssh pi@192.168.43.197  # Connexion
-ssh-keygen            # SSH keys
-scp -r folder pi@ip:~ # Copie fichiers
-    \end{lstlisting}
-    
-    \textbf{Gestion environnement :}
-    \begin{lstlisting}[language=bash]
-source ~/env_projet_7/bin/activate
-pip list
-pip install -r requirements.txt
-    \end{lstlisting}
-    
-    \textbf{Lancer app :}
-    \begin{lstlisting}[language=bash]
-bash run.sh --single --lang fra+eng
-tail -f logs/reading_eye.log  # Logs
-    \end{lstlisting}
-\end{frame}
+À court terme, les améliorations prioritaires incluent l'intégration d'une batterie rechargeable pour une portabilité complète et une utilisation vraiment nomade. Parallèlement, nous planifions des sessions de test utilisateur approfondies avec des personnes malvoyantes pour identifier les douleurs et les points d'amélioration. Les résultats de ces tests guideront les optimisations de performance et d'utilisabilité.
 
-\begin{frame}{Ressources et références}
-    \begin{thebibliography}{9}
-        \bibitem{picamera2} Raspberry Pi Foundation, ``Picamera2 Documentation'', 2024
-        \bibitem{tesseract} Google, ``Tesseract OCR Engine'', GitHub
-        \bibitem{pyttsx3} Nateshmbhat, ``pyttsx3: Offline TTS'', PyPI
-        \bibitem{raspios} Raspberry Pi Foundation, ``Raspberry Pi OS Guide'', 2024
-        \bibitem{accessibility} W3C, ``Web Accessibility Guidelines'', 2024
-    \end{thebibliography}
-\end{frame}
+\subsection{Moyen terme (6-18 mois)}
 
+À moyen terme, nous prévoyons de développer une interface web de configuration avancée permettant la configuration sans SSH. L'expansion du support linguistique inclura des variantes régionales (dialectes marocain, algérien, tunisien) et des langues supplémentaires (allemand, espagnol, italien). Une fonctionnalité de traduction automatique en temps réel sera explorée, permettant aux utilisateurs non-francophones de lire des documents français avec traduction vers leur langue maternelle.
+
+\subsection{Long terme (18+ mois)}
+
+À long terme, nous envisageons une application mobile native (Android, iOS) pour une expérience utilisateur optimisée sur smartphones. Des modèles de deep learning avancés (CNN, Transformers) seront développés et optimisés spécifiquement pour l'exécution sur Raspberry Pi, améliorant la précision d'OCR. L'intégration IoT et cloud infrastructure permettra un déploiement échelonné et une télémétrie centralisée. Enfin, le déploiement à grande échelle dans les pays francophones (Maroc, Algérie, Tunisie, Sénégal, etc.) via des partenariats avec les ministères de l'éducation et les associations pour malvoyants.
+
+\section{Conclusion générale}
+
+Le projet Reading Eye démontre qu'il est possible de créer des solutions d'accessibilité efficaces et économiques en combinant :
+
+\begin{itemize}[label=$\diamond$]
+    \item Matériel peu coûteux et accessible
+    \item Logiciels open-source matures
+    \item Conception centrée sur l'utilisateur
+    \item Documentation et support de qualité
+\end{itemize}
+
+Nous espérons que ce projet servira de catalyseur pour d'autres initiatives similaires en Afrique du Nord et au-delà, créant un véritable impact sur l'inclusion des personnes handicapées.
+
+% ==================== FIN DOCUMENT ====================
 \end{document}
